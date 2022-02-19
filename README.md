@@ -1,1 +1,1 @@
-# React_course_project_todo
+# Шундрик Александр Сергеевич
