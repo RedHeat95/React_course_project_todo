@@ -1,0 +1,18 @@
+.todoList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.todoName {
+  padding: 1rem 0 0;
+  color: #5d0cff;
+}
+
+.rezult {
+  display: flex;
+  justify-content: space-between;
+  width: 20rem;
+  padding: 0.5rem;
+  color: #5d0cff;
+}

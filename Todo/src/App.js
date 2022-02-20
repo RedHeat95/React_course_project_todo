@@ -1,15 +1,9 @@
-import { Provider } from "react-redux";
-
-import { RootRouter } from "./routing/RootRouter";
-import "./App.css";
-import { store } from "./redux/store";
+import { ContextOpen } from "./Context/Context";
 
 function App() {
   return (
-    <div className="App">
-      <Provider store={store}>
-        <RootRouter />
-      </Provider>
+    <div>
+      <ContextOpen />
     </div>
   );
 }

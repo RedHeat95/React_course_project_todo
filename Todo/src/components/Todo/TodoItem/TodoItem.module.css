@@ -1,0 +1,12 @@
+.todoItem {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  width: 20rem;
+  margin-top: 0.5rem;
+  padding: 3px 0;
+  color: #000000;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

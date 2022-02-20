@@ -1,0 +1,19 @@
+.settingWrraper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
+
+.settingTitle {
+  margin-bottom: 1rem;
+  font-size: 45px;
+  color: #000000;
+}
+
+.changeAvatar {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1rem;
+}
