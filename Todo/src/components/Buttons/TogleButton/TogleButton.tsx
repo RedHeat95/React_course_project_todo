@@ -1,12 +1,19 @@
-import { useState } from "react";
-import { Context } from "../../../Context/Context";
 import styles from "./TogleButton.module.css";
 
-export const TogleButton = () => {
+interface IProps {
+  inputChecked: boolean;
+  onChange: () => void;
+}
+
+export const TogleButton = ({ inputChecked, onChange }: IProps) => {
   return (
-    <label className={styles.switch}>
-      <input type="checkbox" />
-      <span className={`${styles.slider} ${styles.round}`}></span>
-    </label>
+    <>
+      <div className={styles.switchCheckbox}>
+        <label className={styles.switch}>
+          <input type="checkbox" onChange={onChange} checked={inputChecked} />
+          <span className={styles.slider}> </span>
+        </label>
+      </div>
+    </>
   );
 };

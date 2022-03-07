@@ -1,48 +1,110 @@
+import { useContext } from "react";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+
+import { IState } from "../../redux/store";
+import { HeaderContext } from "../../context/HeaderContext";
+import { ThemeContext } from "../../context/ThemeContext";
+
 import styles from "./NavBar.module.css";
+import { Container } from "../Container/Container";
 import { TogleButton } from "../Buttons/TogleButton/TogleButton";
 import { BurgerButton } from "../Buttons/BurgerButton/BurgerButton";
 
 export const NavBar = () => {
+  const { changeIsOpen } = useContext(HeaderContext);
+  const { isDark, changeIsDark, theme } = useContext(ThemeContext);
+
+  const isLoggedIn = useSelector(
+    (state: IState) => state.authReducer.isLoggedIn
+  );
+
   return (
     <div className={styles.navBar}>
-      <NavLink className={styles.pageName} to="/" exact>
-        <h1>ToDo</h1>
-      </NavLink>
+      <Container>
+        <div className={styles.menuNavBar}>
+          <NavLink
+            className={styles.pageName}
+            style={{ color: theme.textName }}
+            onClick={changeIsOpen}
+            to="/"
+            exact
+          >
+            ToDo
+          </NavLink>
 
-      <NavLink
-        className={styles.pageName}
-        activeClassName={styles.active}
-        to="/login"
-        exact
-      >
-        <h1>LogIn</h1>
-      </NavLink>
+          {isLoggedIn ? (
+            <NavLink
+              className={styles.pageName}
+              style={{ color: theme.textName }}
+              to="/"
+              exact
+            >
+              LogOut
+              <img
+                className={styles.exit}
+                src={
+                  isDark ? "./images/exitWhite.png" : "./images/exitDark.png"
+                }
+                alt="exit"
+              />
+            </NavLink>
+          ) : (
+            <>
+              <NavLink
+                className={styles.pageName}
+                style={{ color: theme.textName }}
+                onClick={changeIsOpen}
+                to="/login"
+                exact
+              >
+                LogIn
+              </NavLink>
 
-      <NavLink
-        className={styles.pageName}
-        activeClassName={styles.active}
-        to="/registration"
-        exact
-      >
-        <h1>Registration</h1>
-      </NavLink>
+              <NavLink
+                className={styles.pageName}
+                style={{ color: theme.textName }}
+                onClick={changeIsOpen}
+                to="/registration"
+                exact
+              >
+                Registration
+              </NavLink>
+            </>
+          )}
 
-      <NavLink className={styles.pageName} to="/" exact>
-        <h1>LogOut</h1>
-      </NavLink>
+          <NavLink
+            className={styles.pageName}
+            style={{ color: theme.textName }}
+            to="/support"
+            onClick={changeIsOpen}
+            exact
+          >
+            Support
+          </NavLink>
 
-      <NavLink className={styles.pageName} to="/support" exact>
-        <h1>Support</h1>
-      </NavLink>
+          <TogleButton
+            inputChecked={isDark}
+            onChange={() => {
+              changeIsDark();
+            }}
+          />
 
-      <TogleButton />
+          <NavLink to="/setting" exact>
+            <img
+              className={styles.imgSettings}
+              src={
+                isDark
+                  ? "./images/settingsWhite.png"
+                  : "./images/settingsDark.png"
+              }
+              onClick={changeIsOpen}
+            />
+          </NavLink>
 
-      <NavLink to="/setting" exact>
-        <img className={styles.imgSettings} src="./images/settings.png" />
-      </NavLink>
-
-      <BurgerButton />
+          <BurgerButton />
+        </div>
+      </Container>
     </div>
   );
 };

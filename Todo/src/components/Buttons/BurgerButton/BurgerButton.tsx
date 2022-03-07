@@ -1,9 +1,13 @@
 import { useContext } from "react";
-import { Context } from "../../../Context/Context";
+
+import { HeaderContext } from "../../../context/HeaderContext";
+import { ThemeContext } from "../../../context/ThemeContext";
+
 import styles from "./BurgerButton.module.css";
 
 export const BurgerButton = () => {
-  const { isOpen, changeIsOpen } = useContext(Context);
+  const { isOpen, changeIsOpen } = useContext(HeaderContext);
+  const { theme } = useContext(ThemeContext);
 
   return (
     <div className={styles.burgerWrapper}>
@@ -13,10 +17,10 @@ export const BurgerButton = () => {
         }
         onClick={changeIsOpen}
       >
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
+        <span style={{ background: theme.burgerButton }}></span>
+        <span style={{ background: theme.burgerButton }}></span>
+        <span style={{ background: theme.burgerButton }}></span>
+        <span style={{ background: theme.burgerButton }}></span>
       </div>
     </div>
   );

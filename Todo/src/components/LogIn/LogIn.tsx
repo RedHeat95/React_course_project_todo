@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+
 import styles from "./LogIn.module.css";
+import { Container } from "../Container/Container";
 import { LoginForm } from "./LoginForm";
 import { RegistrationForm } from "./RegistrationForm";
 
@@ -14,13 +16,15 @@ export const LogIn = () => {
   }, [location.pathname]);
 
   return (
-    <div className={styles.formWrapper}>
-      {isLogged ? (
-        <p className={styles.formTitle}>Login</p>
-      ) : (
-        <p className={styles.formTitle}>Registration</p>
-      )}
-      {isLogged ? <LoginForm /> : <RegistrationForm />}
-    </div>
+    <Container>
+      <div className={styles.formWrapper}>
+        {isLogged ? (
+          <p className={styles.formTitle}>Login</p>
+        ) : (
+          <p className={styles.formTitle}>Registration</p>
+        )}
+        {isLogged ? <LoginForm /> : <RegistrationForm />}
+      </div>
+    </Container>
   );
 };

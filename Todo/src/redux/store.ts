@@ -1,14 +1,14 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import createSagaMiddleware from "redux-saga";
+import thunk from "redux-thunk";
 
-export interface IState {}
+import { authReducer, IAuthState } from "./reducers/authReducer";
 
-const sagaMiddleware = createSagaMiddleware();
+export interface IState {
+  authReducer: IAuthState;
+}
 
 export const store = createStore(
-  combineReducers({}),
-  composeWithDevTools(applyMiddleware(sagaMiddleware))
+  combineReducers({ authReducer }),
+  composeWithDevTools(applyMiddleware(thunk))
 );
-
-// sagaMiddleware.run();

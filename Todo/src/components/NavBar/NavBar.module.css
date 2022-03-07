@@ -1,18 +1,30 @@
 .navBar {
+  width: 100%;
+}
+
+.menuNavBar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
-  background: #808080;
 }
 
 .pageName {
+  display: flex;
+  align-items: center;
   text-decoration: none;
-  color: #000000;
+  cursor: pointer;
+}
+
+.pageName > .exit {
+  margin-left: 1rem;
+}
+
+.exit {
+  width: 1rem;
 }
 
 .imgSettings {
-  max-width: 3rem;
+  max-width: 2rem;
   border-radius: 50px;
   cursor: pointer;
 }
