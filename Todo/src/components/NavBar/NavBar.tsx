@@ -8,7 +8,7 @@ import { ThemeContext } from "../../context/ThemeContext";
 
 import styles from "./NavBar.module.css";
 import { Container } from "../Container/Container";
-import { TogleButton } from "../Buttons/TogleButton/TogleButton";
+import { ToggleButton } from "../Buttons/ToggleButton/ToggleButton";
 import { BurgerButton } from "../Buttons/BurgerButton/BurgerButton";
 
 export const NavBar = () => {
@@ -83,7 +83,7 @@ export const NavBar = () => {
             Support
           </NavLink>
 
-          <TogleButton
+          <ToggleButton
             inputChecked={isDark}
             onChange={() => {
               changeIsDark();

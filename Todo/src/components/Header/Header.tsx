@@ -10,16 +10,12 @@ import { Container } from "../Container/Container";
 import { NavBar } from "../NavBar/NavBar";
 import { BurgerButton } from "../Buttons/BurgerButton/BurgerButton";
 
-interface IProps {
-  username?: string;
-}
-
-export const Header = ({ username = "Username" }: IProps) => {
+export const Header = () => {
   const { isOpen } = useContext(HeaderContext);
   const { theme } = useContext(ThemeContext);
 
-  const isLoggedIn = useSelector(
-    (state: IState) => state.authReducer.isLoggedIn
+  const { isLoggedIn, username } = useSelector(
+    (state: IState) => state.authReducer
   );
 
   // Это временно для проверки
@@ -38,7 +34,7 @@ export const Header = ({ username = "Username" }: IProps) => {
             <>
               <img
                 className={styles.userAvatar}
-                src={uAvatar ? "" : "../images/defoltAvatar.png"}
+                src={uAvatar ? "" : "../images/defaultAvatar.png"}
                 alt="avatar"
               />
               <h1 className={styles.userName} style={{ color: theme.username }}>

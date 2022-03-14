@@ -3,12 +3,14 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 
 import { authReducer, IAuthState } from "./reducers/authReducer";
+import { todosReducer, ITodoItem, ITodosState } from "./reducers/todosReducer";
 
 export interface IState {
   authReducer: IAuthState;
+  todosReducer: ITodosState;
 }
 
 export const store = createStore(
-  combineReducers({ authReducer }),
+  combineReducers({ authReducer, todosReducer }),
   composeWithDevTools(applyMiddleware(thunk))
 );

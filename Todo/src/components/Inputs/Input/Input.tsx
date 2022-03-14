@@ -1,6 +1,7 @@
-import { ChangeEventHandler, KeyboardEventHandler, useContext } from "react";
+import { ChangeEventHandler, KeyboardEventHandler } from "react";
 
 import styles from "./Input.module.css";
+
 interface IPost {
   type?: string;
   text?: string;
@@ -19,8 +20,8 @@ export const Input = ({
   onKeyDown,
 }: IPost) => {
   return (
-    <div>
-      <p>{text}</p>
+    <div className={styles.inputBox}>
+      {text ? <p>{text}</p> : null}
       <input
         className={styles.input}
         type={type}

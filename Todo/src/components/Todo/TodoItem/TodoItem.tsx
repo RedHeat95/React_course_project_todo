@@ -1,27 +1,41 @@
-import { useState } from "react";
+import { DragEvent } from "react";
+
+import { ITodoItem } from "../../../redux/reducers/todosReducer";
+
+import styles from "./TodoItem.module.css";
 import { Button } from "../../Buttons/Button/Button";
 import { BurgerButton } from "../../Buttons/BurgerButton/BurgerButton";
-import styles from "./TodoItem.module.css";
 
-interface IProps {
-  text: string;
-  time: string;
-  completed: boolean;
+export interface ITodoItemWithBtn extends ITodoItem {
+  onComplete: () => void;
+  onDelete: () => void;
 }
 
-export const TodoItem = ({ text, completed }: IProps) => {
+export const TodoItem = ({
+  id,
+  text,
+  completed,
+  onComplete,
+  onDelete,
+}: ITodoItemWithBtn) => {
   return (
-    <div className={styles.todoItem}>
-      <Button text="&#10003;" onClick={() => {}} />
+    <div className={styles.todoItem} id={id}>
+      <div className={styles.todoBtn}>
+        <Button text="&#10003;" onClick={onComplete} />
+      </div>
+
       <p
+        className={styles.todoText}
         style={{
-          width: "100%",
           textDecoration: completed ? "line-through" : "none",
         }}
       >
         {text}
       </p>
       <BurgerButton />
+      <div className={styles.todoBtn}>
+        <Button text="X" onClick={onDelete} />
+      </div>
     </div>
   );
 };

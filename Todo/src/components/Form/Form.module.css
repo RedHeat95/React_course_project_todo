@@ -7,3 +7,9 @@
 .formTitle > h1 {
   cursor: pointer;
 }
+
+.formBox {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}

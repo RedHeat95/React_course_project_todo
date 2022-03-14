@@ -1,11 +1,11 @@
-import styles from "./TogleButton.module.css";
+import styles from "./ToggleButton.module.css";
 
 interface IProps {
   inputChecked: boolean;
   onChange: () => void;
 }
 
-export const TogleButton = ({ inputChecked, onChange }: IProps) => {
+export const ToggleButton = ({ inputChecked, onChange }: IProps) => {
   return (
     <>
       <div className={styles.switchCheckbox}>

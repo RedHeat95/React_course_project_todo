@@ -1,6 +1,5 @@
 import { Input } from "../Inputs/Input/Input";
 import { Button } from "../Buttons/Button/Button";
-import { BurgerButton } from "../Buttons/BurgerButton/BurgerButton";
 import styles from "./Settings.module.css";
 
 export const Setting = () => {

@@ -1,6 +1,4 @@
-import { ReactNode, useContext } from "react";
-
-import { ThemeContext } from "../../context/ThemeContext";
+import { ReactNode } from "react";
 
 import styles from "./Container.module.css";
 
@@ -9,7 +7,5 @@ interface IProps {
 }
 
 export const Container = ({ children }: IProps) => {
-  const { theme } = useContext(ThemeContext);
-
   return <div className={styles.container}>{children}</div>;
 };

@@ -7,10 +7,8 @@ interface IProps {
 
 export const Button = ({ text, onClick }: IProps) => {
   return (
-    <div className={styles.btnBox}>
-      <button className={styles.btn} onClick={onClick}>
-        {text}
-      </button>
-    </div>
+    <button className={styles.btn} onClick={onClick}>
+      {text}
+    </button>
   );
 };
