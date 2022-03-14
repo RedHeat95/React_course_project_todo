@@ -8,9 +8,9 @@
   color: #ffffff;
   border: none;
   border-radius: 5px;
-  cursor: pointer;
 }
 
 .todoText {
   width: 100%;
+  cursor: grab;
 }

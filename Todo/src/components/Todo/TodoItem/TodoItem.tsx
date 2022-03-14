@@ -9,6 +9,11 @@ import { BurgerButton } from "../../Buttons/BurgerButton/BurgerButton";
 export interface ITodoItemWithBtn extends ITodoItem {
   onComplete: () => void;
   onDelete: () => void;
+  onDragStart: (e: DragEvent<HTMLDivElement>) => void;
+  onDragLeave: (e: DragEvent<HTMLDivElement>) => void;
+  onDragEnd: (e: DragEvent<HTMLDivElement>) => void;
+  onDragOver: (e: DragEvent<HTMLDivElement>) => void;
+  onDrop: (e: DragEvent<HTMLDivElement>) => void;
 }
 
 export const TodoItem = ({
@@ -17,9 +22,23 @@ export const TodoItem = ({
   completed,
   onComplete,
   onDelete,
+  onDragStart,
+  onDragLeave,
+  onDragEnd,
+  onDragOver,
+  onDrop,
 }: ITodoItemWithBtn) => {
   return (
-    <div className={styles.todoItem} id={id}>
+    <div
+      className={styles.todoItem}
+      key={id}
+      onDragStart={onDragStart}
+      onDragLeave={onDragLeave}
+      onDragEnd={onDragEnd}
+      onDragOver={onDragOver}
+      onDrop={onDrop}
+      draggable={true}
+    >
       <div className={styles.todoBtn}>
         <Button text="&#10003;" onClick={onComplete} />
       </div>

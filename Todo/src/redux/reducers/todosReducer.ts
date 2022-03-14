@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { ACTIONS } from "../constants";
 
 export interface ITodoItem {
-  id: string;
+  id: number;
   text: string;
   completed: boolean;
 }

@@ -98,6 +98,7 @@ export const NavBar = () => {
                   ? "./images/settingsWhite.png"
                   : "./images/settingsDark.png"
               }
+              alt="imgSettings"
               onClick={changeIsOpen}
             />
           </NavLink>
