@@ -14,6 +14,7 @@ export interface ITodoItemWithBtn extends ITodoItem {
   onDragEnd: (e: DragEvent<HTMLDivElement>) => void;
   onDragOver: (e: DragEvent<HTMLDivElement>) => void;
   onDrop: (e: DragEvent<HTMLDivElement>) => void;
+  onClick?: () => void;
 }
 
 export const TodoItem = ({
@@ -27,6 +28,7 @@ export const TodoItem = ({
   onDragEnd,
   onDragOver,
   onDrop,
+  onClick,
 }: ITodoItemWithBtn) => {
   return (
     <div
@@ -48,6 +50,7 @@ export const TodoItem = ({
         style={{
           textDecoration: completed ? "line-through" : "none",
         }}
+        onClick={onClick}
       >
         {text}
       </p>

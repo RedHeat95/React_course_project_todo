@@ -14,51 +14,77 @@ import { TodoForm } from "../TodoForm/TodoForm";
 
 export const TodoList = () => {
   const dispatch = useDispatch();
+  const [openTasks, setOpenTasks] = useState(false);
 
   const todos = useSelector((state: IState) => state.todosReducer.todos);
 
   const [todosList, setTodoList] = useState(todos);
-  const [currentTodo, setCurrentTodo] = useState<any>();
+  const [currentTodo, setCurrentTodo] = useState<null | ITodoItemWithBtn>(null);
+
+  const [tasksList, setTasksList] = useState(todos);
+  const [currentTasks, setCurrentTasks] = useState<null | ITodoItemWithBtn>(
+    null
+  );
 
   useEffect(() => {
     setTodoList(todos);
+    setTasksList(todos);
   }, [todos]);
-
   console.log(todos);
-  console.log(todosList);
 
   const dragStartcHandler = (
     e: DragEvent<HTMLDivElement>,
     item: ITodoItemWithBtn
   ) => {
     setCurrentTodo(item);
+    setCurrentTasks(item);
   };
 
-  const dragEndHandler = (e: any) => {
+  const dragEndHandler = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
   };
 
-  const dragOverHandler = (e: any) => {
+  const dragOverHandler = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
   };
 
-  const dropHandler = (e: any, item: ITodoItemWithBtn) => {
+  const dropHandler = (
+    e: DragEvent<HTMLDivElement>,
+    item: ITodoItemWithBtn
+  ) => {
     e.preventDefault();
+
     setTodoList(
       todosList.map((e) => {
-        if (e.id === item.id) {
-          return { ...e, id: currentTodo.id };
+        if (currentTodo) {
+          if (e.time === item.time) {
+            return { ...e, time: currentTodo.time };
+          }
+          if (e.time === currentTodo.time) {
+            return { ...e, time: item.time };
+          }
         }
-        if (e.id === currentTodo.id) {
-          return { ...e, id: item.id };
+        return e;
+      })
+    );
+
+    setTasksList(
+      tasksList.map((e: any) => {
+        if (currentTasks) {
+          if (e.time === item.time) {
+            return { ...e, time: currentTasks.time };
+          }
+          if (e.time === currentTasks.time) {
+            return { ...e, time: item.time };
+          }
         }
         return e;
       })
     );
   };
 
-  const sortCards = (a: any, b: any) => {
-    if (a.id > b.id) {
+  const sortCards = (a: any, b: any): any => {
+    if (a.time > b.time) {
       return 1;
     } else {
       return -1;
@@ -90,32 +116,67 @@ export const TodoList = () => {
   };
 
   return (
-    <div className={styles.todoWrraper}>
-      <div className={styles.todoBox}>
-        <p className={styles.todoName}>Goals</p>
-        <div className={styles.todoList}>
-          {todosList.sort(sortCards).map((item: any) => {
-            return (
-              <TodoItem
-                id={item.id}
-                text={item.text}
-                completed={item.completed}
-                onComplete={() => onClickComplete(item.id)}
-                onDelete={() => onClickDelete(item.id)}
-                onDragStart={(e) => dragStartcHandler(e, item)}
-                onDragLeave={(e) => dragEndHandler(e)}
-                onDragEnd={(e) => dragEndHandler(e)}
-                onDragOver={(e) => dragOverHandler(e)}
-                onDrop={(e) => dropHandler(e, item)}
-              />
-            );
-          })}
-        </div>
+    <div className={styles.todo}>
+      <div className={styles.todoWrraper}>
+        <div className={styles.todoBox}>
+          <p className={styles.todoName}>Goals</p>
+          <div className={styles.todoList}>
+            {todosList.sort(sortCards).map((item: any) => {
+              return (
+                <TodoItem
+                  id={item.id}
+                  time={item.time}
+                  text={item.text}
+                  completed={item.completed}
+                  onComplete={() => onClickComplete(item.id)}
+                  onDelete={() => onClickDelete(item.id)}
+                  onDragStart={(e) => dragStartcHandler(e, item)}
+                  onDragLeave={(e) => dragEndHandler(e)}
+                  onDragEnd={(e) => dragEndHandler(e)}
+                  onDragOver={(e) => dragOverHandler(e)}
+                  onDrop={(e) => dropHandler(e, item)}
+                  onClick={() => setOpenTasks(!openTasks)}
+                />
+              );
+            })}
+          </div>
 
-        <div className={styles.addBox}>
-          <TodoForm addNewTodo={addNewTodo} addNewTodoKey={addNewTodoKey} />
+          <div className={styles.addBox}>
+            <TodoForm addNewTodo={addNewTodo} addNewTodoKey={addNewTodoKey} />
+          </div>
         </div>
       </div>
+
+      {openTasks ? (
+        <div className={styles.tasks}>
+          <div className={styles.todoBox}>
+            {todosList.map((board: any) => {
+              return (
+                <div className={styles.todoList}>
+                  <p className={styles.todoName}>{board.text}</p>
+                  {board.tasks.map((item: any) => {
+                    return (
+                      <TodoItem
+                        id={item.id}
+                        time={item.time}
+                        text={item.text}
+                        completed={item.completed}
+                        onComplete={() => {}}
+                        onDelete={() => {}}
+                        onDragStart={(e) => dragStartcHandler(e, item)}
+                        onDragLeave={(e) => dragEndHandler(e)}
+                        onDragEnd={(e) => dragEndHandler(e)}
+                        onDragOver={(e) => dragOverHandler(e)}
+                        onDrop={(e) => dropHandler(e, item)}
+                      />
+                    );
+                  })}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 };

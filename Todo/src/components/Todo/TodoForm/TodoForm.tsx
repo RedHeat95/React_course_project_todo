@@ -31,7 +31,7 @@ export const TodoForm = ({ addNewTodo, addNewTodoKey }: IProps) => {
   return (
     <div className={styles.form}>
       <Input value={text} onChange={onChange} onKeyDown={addTodoKey} />
-      {/* <Button text="Add" onClick={handleAddNewTodo} /> */}
+      <Button text="Add" onClick={handleAddNewTodo} />
     </div>
   );
 };
