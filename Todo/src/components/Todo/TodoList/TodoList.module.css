@@ -8,27 +8,32 @@
   flex-direction: column;
   flex: 1;
   max-width: 20rem;
+  width: 100%;
   border: 3px solid #000000;
   border-top: none;
 }
 
 .todoName {
   text-align: center;
-  padding: 0.5rem 0;
+  padding: 1rem 0 1rem 0;
   font-family: "Roboto";
   font-size: 2rem;
 }
 
 .todoList {
-  max-height: 43rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   flex: 1;
-  padding: 0 1rem;
+  max-height: 41rem;
+  height: 100%;
   overflow-y: auto;
 }
 
 .addBox {
   margin-top: auto;
   margin-bottom: 0;
+  border-top: 3px solid #000000;
 }
 
 .tasks {

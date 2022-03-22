@@ -11,7 +11,7 @@ import { ThemeContext } from "../../../context/ThemeContext";
 
 import styles from "./TodoList.module.css";
 import { ITodoItemWithBtn, TodoItem } from "../TodoItem/TodoItem";
-import { TodoForm } from "../TodoForm/TodoForm";
+import { TodoAdd } from "../TodoAdd/TodoAdd";
 import { TaskItem } from "../TaskItem/TaskItem";
 
 export const TodoList = () => {
@@ -34,7 +34,6 @@ export const TodoList = () => {
     setTodoList(todos);
     setTasksList(todos);
   }, [todos]);
-  console.log(todos);
 
   const dragStartcHandler = (
     e: DragEvent<HTMLDivElement>,
@@ -133,7 +132,7 @@ export const TodoList = () => {
         </div>
 
         <div className={styles.addBox}>
-          <TodoForm addNewTodo={addNewTodo} addNewTodoKey={addNewTodoKey} />
+          <TodoAdd addNewTodo={addNewTodo} addNewTodoKey={addNewTodoKey} />
         </div>
       </div>
 

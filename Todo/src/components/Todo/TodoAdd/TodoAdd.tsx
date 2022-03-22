@@ -1,15 +1,13 @@
 import { useState, ChangeEvent, KeyboardEvent } from "react";
 
-import styles from "./TodoForm.module.css";
-import { Button } from "../../Buttons/Button/Button";
-import { Input } from "../../Inputs/Input/Input";
+import styles from "./TodoAdd.module.css";
 
 interface IProps {
   addNewTodo: (text: string) => void;
   addNewTodoKey: (text: string) => void;
 }
 
-export const TodoForm = ({ addNewTodo, addNewTodoKey }: IProps) => {
+export const TodoAdd = ({ addNewTodo, addNewTodoKey }: IProps) => {
   const [text, setText] = useState<string>("");
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -29,9 +27,20 @@ export const TodoForm = ({ addNewTodo, addNewTodoKey }: IProps) => {
   };
 
   return (
-    <div className={styles.form}>
-      <Input value={text} onChange={onChange} onKeyDown={addTodoKey} />
-      <Button text="Add" onClick={handleAddNewTodo} />
+    <div className={styles.add}>
+      <input
+        className={styles.addInput}
+        value={text}
+        onChange={onChange}
+        onKeyDown={addTodoKey}
+      />
+
+      <img
+        className={styles.addImg}
+        onClick={handleAddNewTodo}
+        src="../../assets/images/add.svg"
+        alt="add"
+      />
     </div>
   );
 };

@@ -1,10 +1,9 @@
-import { DragEvent } from "react";
+import { DragEvent, useContext } from "react";
 
 import { ITodoItem } from "../../../redux/reducers/todosReducer";
+import { ThemeContext } from "../../../context/ThemeContext";
 
 import styles from "./TodoItem.module.css";
-import { Button } from "../../Buttons/Button/Button";
-import { BurgerButton } from "../../Buttons/BurgerButton/BurgerButton";
 
 export interface ITodoItemWithBtn extends ITodoItem {
   onComplete: () => void;
@@ -30,9 +29,12 @@ export const TodoItem = ({
   onDrop,
   onClick,
 }: ITodoItemWithBtn) => {
+  const { isDark, theme } = useContext(ThemeContext);
+
   return (
     <div
       className={styles.todoItem}
+      style={{ background: theme.backgroundTodo }}
       key={id}
       onDragStart={onDragStart}
       onDragLeave={onDragLeave}
@@ -41,22 +43,38 @@ export const TodoItem = ({
       onDrop={onDrop}
       draggable={true}
     >
-      <div className={styles.todoBtn}>
-        <Button text="&#10003;" onClick={onComplete} />
+      <div onClick={onComplete}>
+        <img
+          className={styles.imgBtn}
+          src={
+            isDark
+              ? "../../assets/images/tickWhite.svg"
+              : "../../assets/images/tickDark.svg"
+          }
+          alt="tick"
+        />
       </div>
 
       <p
         className={styles.todoText}
         style={{
           textDecoration: completed ? "line-through" : "none",
+          color: theme.textName,
         }}
         onClick={onClick}
       >
         {text}
       </p>
-      <BurgerButton />
-      <div className={styles.todoBtn}>
-        <Button text="X" onClick={onDelete} />
+      <div onClick={onDelete}>
+        <img
+          className={styles.imgBtn}
+          src={
+            isDark
+              ? "../../assets/images/basketWhite.svg"
+              : "../../assets/images/basketDark.svg"
+          }
+          alt="basket"
+        />
       </div>
     </div>
   );

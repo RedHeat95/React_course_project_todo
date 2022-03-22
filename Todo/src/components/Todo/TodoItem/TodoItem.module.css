@@ -1,16 +1,25 @@
 .todoItem {
   display: flex;
   align-items: center;
-  width: 100%;
+  justify-content: space-between;
+  text-align: start;
+  width: 90%;
   margin-top: 0.5rem;
-  padding: 3px 0;
-  background: #808080;
-  color: #ffffff;
-  border: none;
-  border-radius: 5px;
+  border-radius: 1rem;
+  border: 3px solid #808080;
+}
+
+.imgBtn {
+  max-height: 2rem;
+  padding: 0.5rem;
+  cursor: pointer;
 }
 
 .todoText {
+  max-width: 10rem;
   width: 100%;
+  word-wrap: break-word;
+  font-family: "Roboto";
+  font-size: 2rem;
   cursor: grab;
 }
