@@ -2,7 +2,7 @@ import { createContext, ReactNode, useEffect, useState } from "react";
 
 const darkTheme = {
   backgroundColor: "#808080",
-  backgroundHeader: "#016efc",
+  backgroundHeader: "#303030",
   burgerButton: "#ffffff",
   username: "#ffffff",
   textName: "#ffffff",
@@ -10,7 +10,7 @@ const darkTheme = {
 
 const lightTheme = {
   backgroundColor: "#ffffff",
-  backgroundHeader: "#ffffff",
+  backgroundHeader: "#C0C0C0",
   burgerButton: "#000000",
   username: "#000000",
   textName: "#000000",

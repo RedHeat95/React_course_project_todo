@@ -1,15 +1,22 @@
+.form {
+  flex: 1;
+}
+
+.wrraperForm {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 .formTitle {
   display: flex;
   justify-content: space-around;
   padding: 1rem 0;
+  border: 3px solid #000000;
 }
 
-.formTitle > h1 {
+.title {
+  font-family: "Roboto";
+  font-size: 2rem;
   cursor: pointer;
-}
-
-.formBox {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
 }

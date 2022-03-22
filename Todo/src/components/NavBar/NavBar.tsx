@@ -20,7 +20,10 @@ export const NavBar = () => {
   );
 
   return (
-    <div className={styles.navBar}>
+    <div
+      className={styles.navBar}
+      style={{ background: theme.backgroundHeader }}
+    >
       <Container>
         <div className={styles.menuNavBar}>
           <NavLink
@@ -44,7 +47,9 @@ export const NavBar = () => {
               <img
                 className={styles.exit}
                 src={
-                  isDark ? "./images/exitWhite.png" : "./images/exitDark.png"
+                  isDark
+                    ? "./assets/images/exitWhite.png"
+                    : "./assets/images/exitDark.png"
                 }
                 alt="exit"
               />
@@ -89,19 +94,20 @@ export const NavBar = () => {
               changeIsDark();
             }}
           />
-
-          <NavLink to="/setting" exact>
-            <img
-              className={styles.imgSettings}
-              src={
-                isDark
-                  ? "./images/settingsWhite.png"
-                  : "./images/settingsDark.png"
-              }
-              alt="imgSettings"
-              onClick={changeIsOpen}
-            />
-          </NavLink>
+          {isLoggedIn ? (
+            <NavLink to="/setting" exact>
+              <img
+                className={styles.imgSettings}
+                src={
+                  isDark
+                    ? "./assets/images/settingsWhite.png"
+                    : "./assets/images/settingsDark.png"
+                }
+                alt="imgSettings"
+                onClick={changeIsOpen}
+              />
+            </NavLink>
+          ) : null}
 
           <BurgerButton />
         </div>

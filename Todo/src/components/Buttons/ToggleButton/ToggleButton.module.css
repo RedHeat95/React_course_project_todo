@@ -33,8 +33,8 @@
 .slider:before {
   content: "";
   /* по образцу не работает */
-  /* background-image: url("/public/images/moon.svg"); */
-  background-image: url("http://localhost:3000/images/moon.svg");
+  /* background-image: url("/public/assets/images/moon.svg"); */
+  background-image: url("http://localhost:3000/assets/images/moon.svg");
   background-repeat: no-repeat;
   background-position: center;
   position: absolute;
@@ -49,13 +49,13 @@
 }
 
 input:checked + .slider {
-  background-color: #016efc;
+  background-color: #808080;
 }
 
 input:checked + .slider:before {
   /* по образцу не работает */
-  /* background-image: url("/public/images/moonDark.svg"); */
-  background-image: url("http://localhost:3000/images/moonDark.svg");
+  /* background-image: url("./public/assets/images/moonDark.svg"); */
+  background-image: url("http://localhost:3000/assets/images/moonDark.svg");
   background-color: #ffffff;
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);

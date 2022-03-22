@@ -1,19 +1,37 @@
+.setting {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  flex: 1;
+  padding-top: 5rem;
+}
+
 .settingWrraper {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 1rem;
+  max-width: 20rem;
+  margin: 0 auto;
 }
 
 .settingTitle {
   margin-bottom: 1rem;
+  font-family: "Robot";
   font-size: 45px;
-  color: #000000;
+}
+
+.settingText {
+  font-family: "Robot";
+  font-size: 1.5rem;
+  margin: 2rem 0;
 }
 
 .changeAvatar {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+  text-align: start;
+  width: 100%;
   margin-bottom: 1rem;
 }

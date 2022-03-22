@@ -1,5 +1,11 @@
 .errorPage {
   display: flex;
   justify-content: center;
-  padding: 1rem;
+  flex: 1;
+  padding-top: 5rem;
+}
+
+.error {
+  font-family: "Roboto";
+  font-size: 4rem;
 }

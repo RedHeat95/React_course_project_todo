@@ -1,11 +1,19 @@
 import { ACTIONS } from "../constants";
 
 export interface ITodoItem {
-  time: number;
+  key: number;
   id: number;
   text: string;
   completed: boolean;
-  tasks?: {};
+
+  tasks?: [
+    {
+      key: number;
+      id: number;
+      completed: boolean;
+      text: string;
+    }
+  ];
 }
 
 export interface ITodosState {
@@ -19,20 +27,20 @@ export const defaultState: ITodosState = {
 export const todosReducer = (state = defaultState, action: any) => {
   if (action.type === ACTIONS.ADD_TODO) {
     const newTodo = {
-      time: new Date().getTime(),
+      key: new Date().getTime(),
       id: "id" + Math.random().toString(16).slice(2),
       completed: false,
       text: action.text,
       tasks: [
         {
-          time: new Date().getTime(),
+          key: new Date().getTime(),
           id: "id" + Math.random().toString(16).slice(2),
           completed: false,
           text: action.text,
         },
       ],
     };
-
+    // Как правильно распространить tasks?
     const newTodos = [...state.todos, newTodo];
 
     return {

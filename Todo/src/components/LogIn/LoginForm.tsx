@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { IState } from "../../redux/store";
 import { login } from "../../redux/actions/authActions";
 import { validationService } from "../../services/validation";
+import { ThemeContext } from "../../context/ThemeContext";
 
 import { Input } from "../Inputs/Input/Input";
 import { Button } from "../Buttons/Button/Button";
@@ -12,6 +13,7 @@ import { Button } from "../Buttons/Button/Button";
 export const LoginForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { theme } = useContext(ThemeContext);
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -75,8 +77,9 @@ export const LoginForm = () => {
         onChange={onChangePassword}
         error={errors.password}
       />
-      {<p>{errorValues}</p>}
+
       <Button text="Login" onClick={onClick} />
+      {<p style={{ color: theme.textName }}>{errorValues}</p>}
     </>
   );
 };

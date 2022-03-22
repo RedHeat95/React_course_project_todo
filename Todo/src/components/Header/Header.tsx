@@ -28,23 +28,40 @@ export const Header = () => {
       style={{ background: theme.backgroundHeader }}
     >
       <Container>
-        <div className={styles.headerMenu}>
+        <div
+          className={styles.headerMenu}
+          style={{ background: theme.backgroundHeader }}
+        >
           <BurgerButton />
           {isLoggedIn ? (
-            <>
+            <div className={styles.userData}>
               <img
                 className={styles.userAvatar}
-                src={uAvatar ? "" : "../images/defaultAvatar.png"}
+                src={uAvatar ? "" : "../assets/images/defaultAvatar.png"}
                 alt="avatar"
               />
-              <h1 className={styles.userName} style={{ color: theme.username }}>
+              <p className={styles.userName} style={{ color: theme.username }}>
                 {username}
-              </h1>
-            </>
+              </p>
+            </div>
           ) : null}
         </div>
-        {isOpen ? <NavBar /> : null}
       </Container>
+      {isOpen ? (
+        <div
+          className={styles.navBarwOpen}
+          style={{ background: theme.backgroundHeader }}
+        >
+          <NavBar />
+        </div>
+      ) : (
+        <div
+          className={styles.navBarClose}
+          style={{ background: theme.backgroundHeader }}
+        >
+          <NavBar />
+        </div>
+      )}
     </nav>
   );
 };

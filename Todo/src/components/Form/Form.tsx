@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useLocation } from "react-router-dom";
+
+import { ThemeContext } from "../../context/ThemeContext";
 
 import styles from "./Form.module.css";
 import { Container } from "../Container/Container";
@@ -7,6 +9,7 @@ import { TodoList } from "../Todo/TodoList/TodoList";
 
 export const Form = () => {
   const location = useLocation();
+  const { theme } = useContext(ThemeContext);
 
   const [isPlan, setIsPlan] = useState(location.pathname.includes("/"));
 
@@ -19,20 +22,50 @@ export const Form = () => {
   };
 
   return (
-    <Container>
-      <div className={styles.formBox}>
-        <div className={styles.form}>
+    <div className={styles.form} style={{ background: theme.backgroundColor }}>
+      <Container>
+        <div className={styles.wrraperForm}>
           <div className={styles.formTitle}>
-            <h1 onClick={() => switchForm(true)}>Plan</h1>
-            <h1 onClick={() => switchForm(false)}>Day</h1>
-            <h1>Week</h1>
-            <h1>Month</h1>
-            <h1>Year</h1>
+            <p
+              className={styles.title}
+              style={{ color: theme.textName }}
+              onClick={() => switchForm(true)}
+            >
+              Plan
+            </p>
+            <p
+              className={styles.title}
+              style={{ color: theme.textName }}
+              onClick={() => switchForm(false)}
+            >
+              Day
+            </p>
+            <p
+              className={styles.title}
+              style={{ color: theme.textName }}
+              onClick={() => switchForm(false)}
+            >
+              Week
+            </p>
+            <p
+              className={styles.title}
+              style={{ color: theme.textName }}
+              onClick={() => switchForm(false)}
+            >
+              Month
+            </p>
+            <p
+              className={styles.title}
+              style={{ color: theme.textName }}
+              onClick={() => switchForm(false)}
+            >
+              Year
+            </p>
           </div>
-        </div>
 
-        {isPlan ? <TodoList /> : null}
-      </div>
-    </Container>
+          {isPlan ? <TodoList /> : null}
+        </div>
+      </Container>
+    </div>
   );
 };

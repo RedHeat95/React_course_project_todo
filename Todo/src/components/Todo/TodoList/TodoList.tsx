@@ -1,4 +1,4 @@
-import { useState, DragEvent, useEffect } from "react";
+import { useState, DragEvent, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { IState } from "../../../redux/store";
@@ -7,12 +7,16 @@ import {
   checkTodo,
   deleteTodo,
 } from "../../../redux/actions/todosActions";
+import { ThemeContext } from "../../../context/ThemeContext";
 
 import styles from "./TodoList.module.css";
 import { ITodoItemWithBtn, TodoItem } from "../TodoItem/TodoItem";
 import { TodoForm } from "../TodoForm/TodoForm";
+import { TaskItem } from "../TaskItem/TaskItem";
 
 export const TodoList = () => {
+  const { theme } = useContext(ThemeContext);
+
   const dispatch = useDispatch();
   const [openTasks, setOpenTasks] = useState(false);
 
@@ -57,25 +61,11 @@ export const TodoList = () => {
     setTodoList(
       todosList.map((e) => {
         if (currentTodo) {
-          if (e.time === item.time) {
-            return { ...e, time: currentTodo.time };
+          if (e.key === item.key) {
+            return { ...e, key: currentTodo.key };
           }
-          if (e.time === currentTodo.time) {
-            return { ...e, time: item.time };
-          }
-        }
-        return e;
-      })
-    );
-
-    setTasksList(
-      tasksList.map((e: any) => {
-        if (currentTasks) {
-          if (e.time === item.time) {
-            return { ...e, time: currentTasks.time };
-          }
-          if (e.time === currentTasks.time) {
-            return { ...e, time: item.time };
+          if (e.key === currentTodo.key) {
+            return { ...e, key: item.key };
           }
         }
         return e;
@@ -84,7 +74,7 @@ export const TodoList = () => {
   };
 
   const sortCards = (a: any, b: any): any => {
-    if (a.time > b.time) {
+    if (a.key > b.key) {
       return 1;
     } else {
       return -1;
@@ -118,32 +108,32 @@ export const TodoList = () => {
   return (
     <div className={styles.todo}>
       <div className={styles.todoWrraper}>
-        <div className={styles.todoBox}>
-          <p className={styles.todoName}>Goals</p>
-          <div className={styles.todoList}>
-            {todosList.sort(sortCards).map((item: any) => {
-              return (
-                <TodoItem
-                  id={item.id}
-                  time={item.time}
-                  text={item.text}
-                  completed={item.completed}
-                  onComplete={() => onClickComplete(item.id)}
-                  onDelete={() => onClickDelete(item.id)}
-                  onDragStart={(e) => dragStartcHandler(e, item)}
-                  onDragLeave={(e) => dragEndHandler(e)}
-                  onDragEnd={(e) => dragEndHandler(e)}
-                  onDragOver={(e) => dragOverHandler(e)}
-                  onDrop={(e) => dropHandler(e, item)}
-                  onClick={() => setOpenTasks(!openTasks)}
-                />
-              );
-            })}
-          </div>
+        <p className={styles.todoName} style={{ color: theme.textName }}>
+          Goals
+        </p>
+        <div className={styles.todoList}>
+          {todosList.sort(sortCards).map((item: any) => {
+            return (
+              <TodoItem
+                id={item.id}
+                key={item.time}
+                text={item.text}
+                completed={item.completed}
+                onComplete={() => onClickComplete(item.id)}
+                onDelete={() => onClickDelete(item.id)}
+                onDragStart={(e) => dragStartcHandler(e, item)}
+                onDragLeave={(e) => dragEndHandler(e)}
+                onDragEnd={(e) => dragEndHandler(e)}
+                onDragOver={(e) => dragOverHandler(e)}
+                onDrop={(e) => dropHandler(e, item)}
+                onClick={() => setOpenTasks(!openTasks)}
+              />
+            );
+          })}
+        </div>
 
-          <div className={styles.addBox}>
-            <TodoForm addNewTodo={addNewTodo} addNewTodoKey={addNewTodoKey} />
-          </div>
+        <div className={styles.addBox}>
+          <TodoForm addNewTodo={addNewTodo} addNewTodoKey={addNewTodoKey} />
         </div>
       </div>
 
@@ -156,9 +146,9 @@ export const TodoList = () => {
                   <p className={styles.todoName}>{board.text}</p>
                   {board.tasks.map((item: any) => {
                     return (
-                      <TodoItem
+                      <TaskItem
                         id={item.id}
-                        time={item.time}
+                        key={item.time}
                         text={item.text}
                         completed={item.completed}
                         onComplete={() => {}}

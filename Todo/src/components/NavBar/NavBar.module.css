@@ -1,5 +1,7 @@
 .navBar {
+  position: absolute;
   width: 100%;
+  padding-bottom: 0.5rem;
 }
 
 .menuNavBar {
@@ -11,6 +13,8 @@
 .pageName {
   display: flex;
   align-items: center;
+  font-family: "Roboto";
+  font-size: 1.5rem;
   text-decoration: none;
   cursor: pointer;
 }

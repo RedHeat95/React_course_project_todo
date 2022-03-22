@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { IState } from "../../redux/store";
 import { register } from "../../redux/actions/authActions";
 import { validationService } from "../../services/validation";
+import { ThemeContext } from "../../context/ThemeContext";
 
 import { Button } from "../Buttons/Button/Button";
 import { Input } from "../Inputs/Input/Input";
@@ -12,6 +13,7 @@ import { Input } from "../Inputs/Input/Input";
 export const RegistrationForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { theme } = useContext(ThemeContext);
 
   const [username, setUserName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -116,8 +118,9 @@ export const RegistrationForm = () => {
         onChange={onChangeRepeatPassword}
         error={errors.repeatPassword}
       />
-      {<p>{errorValues}</p>}
+
       <Button text="Registration" onClick={onClick} />
+      {<p style={{ color: theme.textName }}>{errorValues}</p>}
     </>
   );
 };
