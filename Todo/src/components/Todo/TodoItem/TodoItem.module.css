@@ -3,8 +3,8 @@
   align-items: center;
   justify-content: space-between;
   text-align: start;
-  width: 90%;
-  margin-top: 0.5rem;
+  max-width: 18rem;
+  width: 100%;
   border-radius: 1rem;
   border: 3px solid #808080;
 }
@@ -17,7 +17,7 @@
 
 .todoText {
   max-width: 10rem;
-  width: 100%;
+  width: 90%;
   word-wrap: break-word;
   font-family: "Roboto";
   font-size: 2rem;

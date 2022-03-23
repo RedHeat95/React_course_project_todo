@@ -18,10 +18,12 @@ export interface ITodoItem {
 
 export interface ITodosState {
   todos: ITodoItem[];
+  tasks: ITodoItem[];
 }
 
 export const defaultState: ITodosState = {
   todos: [],
+  tasks: [],
 };
 
 export const todosReducer = (state = defaultState, action: any) => {
@@ -31,16 +33,24 @@ export const todosReducer = (state = defaultState, action: any) => {
       id: "id" + Math.random().toString(16).slice(2),
       completed: false,
       text: action.text,
-      tasks: [
-        {
-          key: new Date().getTime(),
-          id: "id" + Math.random().toString(16).slice(2),
-          completed: false,
-          text: action.text,
-        },
-      ],
+      tasks: [],
     };
-    // Как правильно распространить tasks?
+
+    if (action.type === ACTIONS.ADD_TASKS) {
+      const newTask = {
+        key: new Date().getTime(),
+        idTask: "id" + Math.random().toString(16).slice(2),
+        completed: false,
+        text: action.text,
+      };
+
+      const newTasks = [...state.tasks, newTask];
+
+      return {
+        newTodos: newTasks,
+      };
+    }
+
     const newTodos = [...state.todos, newTodo];
 
     return {
@@ -55,6 +65,7 @@ export const todosReducer = (state = defaultState, action: any) => {
       }
       return item;
     });
+
     return {
       todos: newTodos,
     };

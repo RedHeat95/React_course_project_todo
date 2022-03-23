@@ -11,3 +11,15 @@ export const checkTodo = (id: string) => {
 export const deleteTodo = (id: string) => {
   return { type: ACTIONS.DELETE, id: id };
 };
+
+export const addTask = (text: string, id: string) => {
+  return { type: ACTIONS.ADD_TASKS, text: text, id: id };
+};
+
+export const checkTask = (id: string) => {
+  return { type: ACTIONS.CHECK_TASKS, id: id };
+};
+
+export const deleteTask = (id: string) => {
+  return { type: ACTIONS.DELETE_TASKS, id: id };
+};

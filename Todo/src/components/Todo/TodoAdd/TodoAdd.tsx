@@ -3,8 +3,8 @@ import { useState, ChangeEvent, KeyboardEvent } from "react";
 import styles from "./TodoAdd.module.css";
 
 interface IProps {
-  addNewTodo: (text: string) => void;
-  addNewTodoKey: (text: string) => void;
+  addNewTodo: (e: string) => void;
+  addNewTodoKey: (e: string) => void;
 }
 
 export const TodoAdd = ({ addNewTodo, addNewTodoKey }: IProps) => {
