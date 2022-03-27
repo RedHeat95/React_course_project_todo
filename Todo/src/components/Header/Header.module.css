@@ -1,0 +1,42 @@
+.header {
+  position: sticky;
+  top: 0;
+}
+
+.headerMenu {
+  display: flex;
+  align-items: center;
+  padding: 1rem 0;
+  z-index: 1;
+}
+
+.userData {
+  display: flex;
+  align-items: center;
+}
+
+.userAvatar {
+  margin: 0 2rem;
+  max-width: 3rem;
+  border-radius: 50px;
+  background-color: #ffffff;
+}
+
+.userName {
+  font-family: "Roboto";
+  font-size: 2rem;
+}
+
+.navBarwOpen {
+  position: relative;
+  width: 100%;
+  transform: translateY(0);
+  transition: 0.5s;
+}
+
+.navBarClose {
+  position: relative;
+  width: 100%;
+  transform: translateY(-100px);
+  transition: 0.5s;
+}

@@ -1,0 +1,12 @@
+.support {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  flex: 1;
+  padding-top: 5rem;
+}
+
+.supportName {
+  font-family: "Robot";
+  font-size: 3rem;
+}

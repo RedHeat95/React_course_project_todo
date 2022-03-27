@@ -1,0 +1,34 @@
+.navBar {
+  position: absolute;
+  width: 100%;
+  padding-bottom: 0.5rem;
+}
+
+.menuNavBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pageName {
+  display: flex;
+  align-items: center;
+  font-family: "Roboto";
+  font-size: 1.5rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.pageName > .exit {
+  margin-left: 1rem;
+}
+
+.exit {
+  width: 1rem;
+}
+
+.imgSettings {
+  max-width: 2rem;
+  border-radius: 50px;
+  cursor: pointer;
+}

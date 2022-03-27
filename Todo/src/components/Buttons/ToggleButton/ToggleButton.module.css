@@ -1,0 +1,63 @@
+.switchCheckbox {
+  display: flex;
+  align-items: center;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fdfdff;
+  border: 0.5px solid #000000;
+  border-radius: 50px;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  cursor: pointer;
+}
+
+.slider:before {
+  content: "";
+  /* по образцу не работает */
+  /* background-image: url("/public/assets/images/moon.svg"); */
+  background-image: url("http://localhost:3000/assets/images/moon.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  position: absolute;
+  border-radius: 50px;
+  height: 20px;
+  width: 20px;
+  left: 8px;
+  bottom: 4px;
+  background-color: #000000;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #808080;
+}
+
+input:checked + .slider:before {
+  /* по образцу не работает */
+  /* background-image: url("./public/assets/images/moonDark.svg"); */
+  background-image: url("http://localhost:3000/assets/images/moonDark.svg");
+  background-color: #ffffff;
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
