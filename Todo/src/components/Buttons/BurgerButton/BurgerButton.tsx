@@ -1,6 +1,6 @@
 import { useContext } from "react";
 
-import { HeaderContext } from "../../../context/HeaderContext";
+import { HeaderContext } from "../../Header/Header";
 import { ThemeContext } from "../../../context/ThemeContext";
 
 import styles from "./BurgerButton.module.css";

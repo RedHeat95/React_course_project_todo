@@ -1,6 +1,6 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-import { HeaderProdiver } from "../context/HeaderContext";
+import { Header } from "../components/Header/Header";
 
 import { Form } from "../components/Form/Form";
 import { LogIn } from "../components/LogIn/LogIn";
@@ -11,7 +11,7 @@ import { ErrorPage } from "../components/ErrorPage/ErrorPage";
 export function RootRouter() {
   return (
     <BrowserRouter>
-      <HeaderProdiver />
+      <Header />
       <Switch>
         <Route path="/" component={Form} exact />
         <Route path="/login" component={LogIn} exact />

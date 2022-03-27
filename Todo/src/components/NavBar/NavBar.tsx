@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 import { IState } from "../../redux/store";
-import { HeaderContext } from "../../context/HeaderContext";
+import { HeaderContext } from "../Header/Header";
 import { ThemeContext } from "../../context/ThemeContext";
 
 import styles from "./NavBar.module.css";
