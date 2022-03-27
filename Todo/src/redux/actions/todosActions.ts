@@ -12,8 +12,8 @@ export const deleteTodo = (id: string) => {
   return { type: ACTIONS.DELETE, id: id };
 };
 
-export const addTask = (text: string, id: string) => {
-  return { type: ACTIONS.ADD_TASKS, text: text, id: id };
+export const addTask = (text: string) => {
+  return { type: ACTIONS.ADD_TASKS, text: text};
 };
 
 export const checkTask = (id: string) => {

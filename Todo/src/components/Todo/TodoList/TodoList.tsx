@@ -90,9 +90,9 @@ export const TodoList = () => {
     }
   };
 
-  const addNewTask = (text: string, id: string) => {
+  const addNewTask = (text: string) => {
     if (text !== "") {
-      dispatch(addTask(text, id));
+      dispatch(addTask(text));
     } else {
       alert("Введите что-нибудь");
     }
@@ -106,9 +106,9 @@ export const TodoList = () => {
     }
   };
 
-  const addNewTaskKey = (text: string, id: string) => {
+  const addNewTaskKey = (text: string) => {
     if (text !== "") {
-      dispatch(addTask(text, id));
+      dispatch(addTask(text));
     } else {
       alert("Введите что-нибудь");
     }

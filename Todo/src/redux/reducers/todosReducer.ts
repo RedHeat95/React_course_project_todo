@@ -36,25 +36,25 @@ export const todosReducer = (state = defaultState, action: any) => {
       tasks: [],
     };
 
-    if (action.type === ACTIONS.ADD_TASKS) {
-      const newTask = {
-        key: new Date().getTime(),
-        idTask: "id" + Math.random().toString(16).slice(2),
-        completed: false,
-        text: action.text,
-      };
-
-      const newTasks = [...state.tasks, newTask];
-
-      return {
-        newTodos: newTasks,
-      };
-    }
-
     const newTodos = [...state.todos, newTodo];
 
     return {
       todos: newTodos,
+    };
+  }
+
+  if (action.type === ACTIONS.ADD_TASKS) {
+    const newTask = {
+      key: new Date().getTime(),
+      idTask: "id" + Math.random().toString(16).slice(2),
+      completed: false,
+      text: action.text,
+    };
+
+    const newTasks = [...state.tasks, newTask];
+
+    return {
+      todos: newTasks,
     };
   }
 
