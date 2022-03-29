@@ -1,7 +1,7 @@
 import { ACTIONS } from "../constants";
 
-export const addTodo = (text: string) => {
-  return { type: ACTIONS.ADD_TODO, text: text };
+export const addTodo = (name: string) => {
+  return { type: ACTIONS.ADD_TODO, name: name };
 };
 
 export const checkTodo = (id: string) => {
@@ -12,8 +12,8 @@ export const deleteTodo = (id: string) => {
   return { type: ACTIONS.DELETE, id: id };
 };
 
-export const addTask = (text: string) => {
-  return { type: ACTIONS.ADD_TASKS, text: text};
+export const addTask = (name: string, id: string) => {
+  return { type: ACTIONS.ADD_TASKS, name: name, id };
 };
 
 export const checkTask = (id: string) => {

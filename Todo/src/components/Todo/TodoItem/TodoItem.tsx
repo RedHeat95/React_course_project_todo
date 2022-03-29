@@ -4,6 +4,7 @@ import { ITodoItem } from "../../../redux/reducers/todosReducer";
 import { ThemeContext } from "../../../context/ThemeContext";
 
 import styles from "./TodoItem.module.css";
+import { CheckInput } from "../../Inputs/CheckInput/CheckInput";
 
 export interface ITodoItemWithBtn extends ITodoItem {
   onComplete: () => void;
@@ -13,12 +14,10 @@ export interface ITodoItemWithBtn extends ITodoItem {
   onDragEnd: (e: DragEvent<HTMLDivElement>) => void;
   onDragOver: (e: DragEvent<HTMLDivElement>) => void;
   onDrop: (e: DragEvent<HTMLDivElement>) => void;
-  onClick?: () => void;
 }
 
 export const TodoItem = ({
-  id,
-  text,
+  name,
   completed,
   onComplete,
   onDelete,
@@ -27,15 +26,13 @@ export const TodoItem = ({
   onDragEnd,
   onDragOver,
   onDrop,
-  onClick,
 }: ITodoItemWithBtn) => {
-  const { isDark, theme } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   return (
     <div
       className={styles.todoItem}
       style={{ background: theme.backgroundTodo }}
-      key={id}
       onDragStart={onDragStart}
       onDragLeave={onDragLeave}
       onDragEnd={onDragEnd}
@@ -43,39 +40,29 @@ export const TodoItem = ({
       onDrop={onDrop}
       draggable={true}
     >
-      <div onClick={onComplete}>
-        <img
-          className={styles.imgBtn}
-          src={
-            isDark
-              ? "../../assets/images/tickWhite.svg"
-              : "../../assets/images/tickDark.svg"
-          }
-          alt="tick"
-        />
+      <div className={styles.checkbox} onClick={onComplete}>
+        <input type="checkbox" id="check" className={styles.input} />
+        <label htmlFor="check" className={styles.label}>
+          <img src="./assets/images/check.svg" alt="check" />
+        </label>
       </div>
 
-      <p
-        className={styles.todoText}
+      <span
+        className={styles.todoItemText}
         style={{
           textDecoration: completed ? "line-through" : "none",
           color: theme.textName,
         }}
-        onClick={onClick}
       >
-        {text}
-      </p>
-      <div onClick={onDelete}>
-        <img
-          className={styles.imgBtn}
-          src={
-            isDark
-              ? "../../assets/images/basketWhite.svg"
-              : "../../assets/images/basketDark.svg"
-          }
-          alt="basket"
-        />
-      </div>
+        {name}
+      </span>
+
+      <img
+        className={styles.todoItemImgRemove}
+        src="../../assets/images/remove.svg"
+        alt="basket"
+        onClick={onDelete}
+      />
     </div>
   );
 };

@@ -1,12 +1,10 @@
-.navBar {
-  position: absolute;
-  width: 100%;
+.navbar {
   padding-bottom: 0.5rem;
 }
 
-.menuNavBar {
+.navbarMebu {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 }
 

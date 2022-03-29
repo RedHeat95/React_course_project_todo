@@ -1,29 +1,29 @@
+import { idText } from "typescript";
 import { ACTIONS } from "../constants";
 
 export interface ITodoItem {
   key: number;
   id: number;
-  text: string;
   completed: boolean;
+  name: string;
 
   tasks?: [
     {
       key: number;
       id: number;
+      todoId: number;
       completed: boolean;
-      text: string;
+      name: string;
     }
   ];
 }
 
 export interface ITodosState {
   todos: ITodoItem[];
-  tasks: ITodoItem[];
 }
 
 export const defaultState: ITodosState = {
   todos: [],
-  tasks: [],
 };
 
 export const todosReducer = (state = defaultState, action: any) => {
@@ -32,7 +32,7 @@ export const todosReducer = (state = defaultState, action: any) => {
       key: new Date().getTime(),
       id: "id" + Math.random().toString(16).slice(2),
       completed: false,
-      text: action.text,
+      name: action.name,
       tasks: [],
     };
 
@@ -44,17 +44,10 @@ export const todosReducer = (state = defaultState, action: any) => {
   }
 
   if (action.type === ACTIONS.ADD_TASKS) {
-    const newTask = {
-      key: new Date().getTime(),
-      idTask: "id" + Math.random().toString(16).slice(2),
-      completed: false,
-      text: action.text,
-    };
-
-    const newTasks = [...state.tasks, newTask];
+    const tasks = state.todos.map((item: ITodoItem) => item.id === action.id);
 
     return {
-      todos: newTasks,
+      todos: tasks,
     };
   }
 

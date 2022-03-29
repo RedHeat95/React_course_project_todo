@@ -32,15 +32,12 @@ export const Header = () => {
 
   return (
     <HeaderContext.Provider value={{ isOpen, changeIsOpen }}>
-      <nav
-        className={styles.header}
-        style={{ background: theme.backgroundHeader }}
-      >
-        <Container>
-          <div
-            className={styles.headerMenu}
-            style={{ background: theme.backgroundHeader }}
-          >
+      <nav className={styles.header}>
+        <div
+          className={styles.headerMenu}
+          style={{ background: theme.backgroundHeader }}
+        >
+          <Container>
             <BurgerButton />
             {isLoggedIn ? (
               <div className={styles.userData}>
@@ -57,23 +54,10 @@ export const Header = () => {
                 </p>
               </div>
             ) : null}
-          </div>
-        </Container>
-        {isOpen ? (
-          <div
-            className={styles.navBarwOpen}
-            style={{ background: theme.backgroundHeader }}
-          >
-            <NavBar />
-          </div>
-        ) : (
-          <div
-            className={styles.navBarClose}
-            style={{ background: theme.backgroundHeader }}
-          >
-            <NavBar />
-          </div>
-        )}
+          </Container>
+        </div>
+
+        {isOpen ? <NavBar /> : null}
       </nav>
     </HeaderContext.Provider>
   );

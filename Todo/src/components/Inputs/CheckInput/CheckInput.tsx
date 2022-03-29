@@ -1,20 +1,12 @@
-import { ChangeEventHandler, KeyboardEvent } from "react";
-import styles from "./Input.module.css";
+import styles from "./CheckInput.module.css";
 
-interface IProps {
-  value: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
-  onKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
-}
-
-export const CheckInput = ({ value, onChange, onKeyDown }: IProps) => {
+export const CheckInput = () => {
   return (
-    <input
-      className={styles.input}
-      onChange={onChange}
-      onKeyDown={onKeyDown}
-      value={value}
-      type="text"
-    />
+    <div className={styles.checkbox}>
+      <input type="checkbox" id="check" className={styles.input} />
+      <label htmlFor="check" className={styles.label}>
+        <img src="./assets/images/check.svg" alt="check" />
+      </label>
+    </div>
   );
 };

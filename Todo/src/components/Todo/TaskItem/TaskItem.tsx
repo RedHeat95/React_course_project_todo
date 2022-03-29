@@ -18,7 +18,7 @@ export interface ITodoItemWithBtn extends ITodoItem {
 
 export const TaskItem = ({
   id,
-  text,
+  name,
   completed,
   onComplete,
   onDelete,
@@ -63,7 +63,7 @@ export const TaskItem = ({
         }}
         onClick={onClick}
       >
-        {text}
+        {name}
       </p>
       <div onClick={onDelete}>
         <img

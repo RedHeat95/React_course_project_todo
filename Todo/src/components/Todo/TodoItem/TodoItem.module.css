@@ -1,25 +1,68 @@
 .todoItem {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  text-align: start;
-  max-width: 18rem;
-  width: 100%;
-  border-radius: 1rem;
-  border: 3px solid #808080;
+  padding: 0.5rem 1rem;
 }
 
-.imgBtn {
-  max-height: 2rem;
-  padding: 0.5rem;
+.todoItem:hover {
+  background: rgb(255, 255, 255, 0.5);
+  border-radius: 4px;
+}
+
+.todoItemActive {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+}
+
+.checkbox {
+  display: flex;
+  margin-right: 1rem;
+}
+
+.input {
+  display: none;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  width: 20px;
+  border: 2px solid #e8e8e8;
+  border-radius: 30px;
+}
+
+.input:checked + .label {
+  background-color: #4dd599;
+  border-color: #4dd599;
+}
+
+.label:hover {
+  background-color: #f2f2f2;
+}
+
+.todoItemText {
+  flex: 1;
+  color: #ffffff;
+  cursor: grab;
+}
+
+.todoItemTextActive {
+  color: #000000;
+  cursor: grab;
+}
+
+.todoItemImgRemove {
+  width: 1rem;
+  opacity: 0;
   cursor: pointer;
 }
 
-.todoText {
-  max-width: 10rem;
-  width: 90%;
-  word-wrap: break-word;
-  font-family: "Roboto";
-  font-size: 2rem;
-  cursor: grab;
+.todoItem:hover > .todoItemImgRemove {
+  opacity: 0.3;
 }

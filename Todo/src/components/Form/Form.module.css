@@ -2,7 +2,7 @@
   flex: 1;
 }
 
-.wrraperForm {
+.formWrraper {
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -12,11 +12,9 @@
   display: flex;
   justify-content: space-around;
   padding: 1rem 0;
-  border: 3px solid #000000;
 }
 
 .title {
-  font-family: "Roboto";
   font-size: 2rem;
   cursor: pointer;
 }
