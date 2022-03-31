@@ -4,8 +4,8 @@ import styles from "./TodoAdd.module.css";
 import { TodoMenu } from "../TodoMenu/TodoMenu";
 
 interface IProps {
-  addNewTodo: (e: string) => void;
-  addNewTodoKey: (e: string) => void;
+  addNewTodo: (text: string) => void;
+  addNewTodoKey: (text: string) => void;
 }
 
 export const TodoAdd = ({ addNewTodo, addNewTodoKey }: IProps) => {

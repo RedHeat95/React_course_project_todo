@@ -28,6 +28,15 @@ export const TodoList = () => {
   const [currentTodo, setCurrentTodo] = useState<null | ITodoItemWithBtn>(null);
   const [activeItem, setActiveItem] = useState<null | ITodoItemWithBtn>(null);
 
+  /**
+   * поскольку при добавлении тасок изменяется весь массив todos, нам надо на него завязаться, чтобы перерисовать массив тасок
+   * поэтому сделаем, отрисовка тасок опиралась на значения из редакса
+   */
+
+  const activeItemFromState = activeItem
+    ? todos.find((item) => activeItem.id === item.id)
+    : null;
+
   useEffect(() => {
     setTodoList(todos);
   }, [todos]);
@@ -92,17 +101,19 @@ export const TodoList = () => {
     }
   };
 
-  const addNewTask = (name: string, id: any) => {
-    if (name !== "") {
-      dispatch(addTask(name, id));
+  const addNewTask = (name: string) => {
+    console.log({ activeItem });
+
+    if (name !== "" && activeItem) {
+      dispatch(addTask(name, activeItem.id));
     } else {
       alert("Введите что-нибудь");
     }
   };
 
-  const addNewTaskKey = (name: string, id: any) => {
-    if (name !== "") {
-      dispatch(addTask(name, id));
+  const addNewTaskKey = (name: string) => {
+    if (name !== "" && activeItem) {
+      dispatch(addTask(name, activeItem.id));
     } else {
       alert("Введите что-нибудь");
     }
@@ -181,8 +192,10 @@ export const TodoList = () => {
       </div>
 
       <div className={styles.todoTasks}>
-        {todosList && activeItem && <Title text={activeItem} />}
-        {/* {todos.map((item: any) => {
+        {todosList && activeItemFromState && (
+          <Title text={activeItemFromState} />
+        )}
+        {activeItemFromState?.tasks?.map((item: any) => {
           return (
             <div>
               <TaskItem
@@ -197,14 +210,13 @@ export const TodoList = () => {
                 onDragEnd={(e) => dragEndHandler(e)}
                 onDragOver={(e) => dragOverHandler(e)}
                 onDrop={(e) => dropHandler(e, item)}
-                
-            
-                
               />
             </div>
           );
-        })} */}
-        {/* <TodoAdd addNewTodo={addNewTask} addNewTodoKey={addNewTaskKey} /> */}
+        })}
+        {activeItemFromState ? (
+          <TodoAdd addNewTodo={addNewTask} addNewTodoKey={addNewTaskKey} />
+        ) : null}
       </div>
     </div>
   );

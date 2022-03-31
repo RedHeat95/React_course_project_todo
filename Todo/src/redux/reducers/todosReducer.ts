@@ -1,21 +1,22 @@
 import { idText } from "typescript";
 import { ACTIONS } from "../constants";
 
-export interface ITodoItem {
+interface ITask {
   key: number;
   id: number;
+  // todoId: number; у нас массив тасок будет внутри объекта тудушки, дублировать id не надо
+  completed: boolean;
+  name: string;
+}
+
+export interface ITodoItem {
+  key: number;
+  id: string;
   completed: boolean;
   name: string;
 
-  tasks?: [
-    {
-      key: number;
-      id: number;
-      todoId: number;
-      completed: boolean;
-      name: string;
-    }
-  ];
+  //по аналогии с тудушками
+  tasks?: ITask[];
 }
 
 export interface ITodosState {
@@ -44,10 +45,29 @@ export const todosReducer = (state = defaultState, action: any) => {
   }
 
   if (action.type === ACTIONS.ADD_TASKS) {
-    const tasks = state.todos.map((item: ITodoItem) => item.id === action.id);
+    const todos = state.todos.map((item: ITodoItem) => {
+      //заходим только в ту тудушку, которая сейчас активная
+      if (item.id === action.id) {
+        //объект новой таски
+        const task = {
+          id: "id" + Math.random().toString(16).slice(2),
+          name: action.name,
+          completed: false,
+        };
+
+        //проверяем будет ли свойство tasks в объекте item
+        const prevTasks = item.tasks || [];
+        //новый массив тасок
+        const tasks = [...prevTasks, task];
+        //заменяем массив с тасками на новый и возвращаем этот объекта
+        return { ...item, tasks };
+      }
+      //возвращаем item чтобы в map не было undefined
+      return item;
+    });
 
     return {
-      todos: tasks,
+      todos: todos,
     };
   }
 
