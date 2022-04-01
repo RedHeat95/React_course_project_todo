@@ -21,11 +21,11 @@ export const NavBar = () => {
 
   return (
     <div
-      className={styles.navBar}
+      className={styles.navbar}
       style={{ background: theme.backgroundHeader }}
     >
       <Container>
-        <div className={styles.menuNavBar}>
+        <div className={styles.navbarMebu}>
           <NavLink
             className={styles.pageName}
             style={{ color: theme.textName }}

@@ -24,7 +24,7 @@ export const Form = () => {
   return (
     <div className={styles.form} style={{ background: theme.backgroundColor }}>
       <Container>
-        <div className={styles.wrraperForm}>
+        <div className={styles.formWrraper}>
           <div className={styles.formTitle}>
             <p
               className={styles.title}

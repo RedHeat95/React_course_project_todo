@@ -1,8 +1,27 @@
+.checkbox {
+  display: flex;
+  margin-right: 1rem;
+}
+
 .input {
-  flex: 1;
-  padding: 14px 32px 14px 16px;
-  border-radius: 4px 0 0 4px;
-  border: 2px solid #5d0cff;
-  outline: none;
-  background: transparent;
+  display: none;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  width: 20px;
+  border: 2px solid #e8e8e8;
+  border-radius: 30px;
+}
+
+.input:checked + .label {
+  background-color: #4dd599;
+  border-color: #4dd599;
+}
+
+.label:hover {
+  background-color: #f2f2f2;
 }

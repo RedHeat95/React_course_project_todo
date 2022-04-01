@@ -1,0 +1,24 @@
+.title {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 2px solid#F2F2F2;
+}
+
+.titleText {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 39px;
+  color: #64c4ed;
+}
+
+.titleImg {
+  margin-left: 1rem;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.titleText:hover > .titleImg {
+  opacity: 0.8;
+}

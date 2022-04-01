@@ -7,7 +7,6 @@
   display: flex;
   align-items: center;
   padding: 1rem 0;
-  z-index: 1;
 }
 
 .userData {
@@ -25,18 +24,4 @@
 .userName {
   font-family: "Roboto";
   font-size: 2rem;
-}
-
-.navBarwOpen {
-  position: relative;
-  width: 100%;
-  transform: translateY(0);
-  transition: 0.5s;
-}
-
-.navBarClose {
-  position: relative;
-  width: 100%;
-  transform: translateY(-100px);
-  transition: 0.5s;
 }
