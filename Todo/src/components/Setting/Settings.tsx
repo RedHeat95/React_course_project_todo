@@ -1,19 +1,23 @@
 import { useContext, useState, DragEvent } from "react";
+import { useDispatch } from "react-redux";
 
 import { ThemeContext } from "../../context/ThemeContext";
+import { addAvatar } from "../../redux/actions/authActions";
 
 import styles from "./Settings.module.css";
 import { Container } from "../Container/Container";
-import { Modal } from "../Modal/Modal";
-
 import { Button } from "../Buttons/Button/Button";
+import { Modal } from "../Modal/Modal";
 
 export const Setting = () => {
   const { isDark, theme } = useContext(ThemeContext);
 
-  const [drag, setDrag] = useState(false);
+  const dispatch = useDispatch();
 
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [drag, setDrag] = useState(false);
+
+  const [image, setImage] = useState("");
 
   const dragStartHandler = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -27,10 +31,25 @@ export const Setting = () => {
 
   const onDropHandler = (e: any) => {
     e.preventDefault();
-    let files = [...e.dataTransfer.files];
-    const formData = new FormData();
-    formData.append("file", files[0]);
+    setImage(e.dataTransfer.files[0]);
+    const reader = new FileReader();
+    reader.readAsDataURL(e.dataTransfer.files[0]);
+
+    reader.onload = (e: any) => {
+      setImage(e.target.result);
+    };
+
     setDrag(false);
+    setIsModalVisible(false);
+  };
+
+  const removeImage = () => {
+    setImage("");
+  };
+
+  const addNewAvatar = () => {
+    dispatch(addAvatar(image));
+    setImage("");
   };
 
   return (
@@ -55,7 +74,7 @@ export const Setting = () => {
                 Avatar
               </p>
               <img
-                className={styles.changeImg}
+                className={styles.settingImg}
                 src={
                   isDark
                     ? "./assets/images/settingsWhite.png"
@@ -65,7 +84,14 @@ export const Setting = () => {
                 onClick={() => setIsModalVisible(true)}
               />
             </div>
-            <Button text="Save" onClick={() => {}} />
+            {image ? (
+              <>
+                <img className={styles.prevImg} src={image} alt="new avatar" />
+                <Button text="Remove image" onClick={removeImage} />
+              </>
+            ) : null}
+
+            <Button text="Save" onClick={addNewAvatar} />
           </div>
         </Container>
       </div>

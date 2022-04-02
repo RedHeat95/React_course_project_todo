@@ -15,35 +15,31 @@ export const HeaderContext = createContext({
 });
 
 export const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { theme } = useContext(ThemeContext);
 
+  const [isOpen, setIsOpen] = useState(false);
   const changeIsOpen = () => {
     setIsOpen((isOpen) => !isOpen);
   };
-  const { theme } = useContext(ThemeContext);
 
-  const { isLoggedIn, username } = useSelector(
+  const { isLoggedIn, username, avatar } = useSelector(
     (state: IState) => state.authReducer
   );
 
-  // Это временно для проверки
-  // const uAvatar = true;
-  const uAvatar = false;
-
   return (
     <HeaderContext.Provider value={{ isOpen, changeIsOpen }}>
-      <nav className={styles.header}>
-        <div
-          className={styles.headerMenu}
-          style={{ background: theme.backgroundHeader }}
-        >
-          <Container>
+      <nav
+        className={styles.header}
+        style={{ background: theme.backgroundHeader }}
+      >
+        <Container>
+          <div className={styles.headerMenu}>
             <BurgerButton />
             {isLoggedIn ? (
               <div className={styles.userData}>
                 <img
                   className={styles.userAvatar}
-                  src={uAvatar ? "" : "../assets/images/defaultAvatar.png"}
+                  src={avatar || "../assets/images/defaultAvatar.png"}
                   alt="avatar"
                 />
                 <p
@@ -54,10 +50,10 @@ export const Header = () => {
                 </p>
               </div>
             ) : null}
-          </Container>
-        </div>
+          </div>
 
-        {isOpen ? <NavBar /> : null}
+          {isOpen ? <NavBar /> : null}
+        </Container>
       </nav>
     </HeaderContext.Provider>
   );

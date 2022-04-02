@@ -4,7 +4,7 @@
 
 .addFront {
   color: #767676;
-  opacity: 50%;
+  opacity: 0.8;
 }
 
 .addFront:hover {
@@ -13,17 +13,18 @@
 
 .addWindow {
   position: relative;
+  max-width: 20rem;
+  width: 100%;
   margin-top: 1rem;
   padding: 1rem;
-  background: #ffffff;
   box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.05);
   border-radius: 10px;
 }
 
 .imgClose {
   position: absolute;
-  right: -5px;
-  top: -5px;
+  right: -3px;
+  top: -3px;
   cursor: pointer;
 }
 

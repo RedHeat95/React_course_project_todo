@@ -1,14 +1,17 @@
-import { useState, ChangeEvent, KeyboardEvent } from "react";
+import { useState, useContext, ChangeEvent, KeyboardEvent } from "react";
+
+import { ThemeContext } from "../../../context/ThemeContext";
 
 import styles from "./TodoAdd.module.css";
 import { TodoMenu } from "../TodoMenu/TodoMenu";
 
 interface IProps {
-  addNewTodo: (e: string) => void;
-  addNewTodoKey: (e: string) => void;
+  addNewTodo: (text: string) => void;
+  addNewTodoKey: (text: string) => void;
 }
 
 export const TodoAdd = ({ addNewTodo, addNewTodoKey }: IProps) => {
+  const { theme } = useContext(ThemeContext);
   const [openAdd, setOpenAdd] = useState<boolean>(false);
   const [text, setText] = useState<string>("");
 
@@ -19,15 +22,19 @@ export const TodoAdd = ({ addNewTodo, addNewTodoKey }: IProps) => {
   const addTodoKey = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       addNewTodoKey(text);
-      setText("");
-      setOpenAdd(!openAdd);
+      if (text !== "") {
+        setText("");
+        setOpenAdd(!openAdd);
+      }
     }
   };
 
-  const AddTodo = () => {
+  const addTodo = () => {
     addNewTodo(text);
-    setText("");
-    setOpenAdd(!openAdd);
+    if (text !== "") {
+      setText("");
+      setOpenAdd(!openAdd);
+    }
   };
 
   const onClose = () => {
@@ -41,7 +48,10 @@ export const TodoAdd = ({ addNewTodo, addNewTodoKey }: IProps) => {
         <TodoMenu src={"./assets/images/add.svg"} text="Add" />
       </div>
       {openAdd ? (
-        <div className={styles.addWindow}>
+        <div
+          className={styles.addWindow}
+          style={{ background: theme.backgroundAddTodo }}
+        >
           <img
             src="./assets/images/close.svg"
             alt="close"
@@ -56,7 +66,7 @@ export const TodoAdd = ({ addNewTodo, addNewTodoKey }: IProps) => {
             onKeyDown={addTodoKey}
           />
 
-          <button className={styles.addBtn} onClick={AddTodo}>
+          <button className={styles.addBtn} onClick={addTodo}>
             Add
           </button>
         </div>

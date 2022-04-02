@@ -5,7 +5,9 @@ import { IState } from "../../../redux/store";
 import {
   addTask,
   addTodo,
+  checkTask,
   checkTodo,
+  deleteTask,
   deleteTodo,
 } from "../../../redux/actions/todosActions";
 import { ThemeContext } from "../../../context/ThemeContext";
@@ -16,8 +18,6 @@ import { ITodoItemWithBtn, TodoItem } from "../TodoItem/TodoItem";
 import { TodoAdd } from "../TodoAdd/TodoAdd";
 import { Title } from "../../Title/Title";
 
-import { TaskItem } from "../TaskItem/TaskItem";
-
 export const TodoList = () => {
   const { isDark, theme } = useContext(ThemeContext);
 
@@ -27,6 +27,10 @@ export const TodoList = () => {
   const [todosList, setTodoList] = useState(todos);
   const [currentTodo, setCurrentTodo] = useState<null | ITodoItemWithBtn>(null);
   const [activeItem, setActiveItem] = useState<null | ITodoItemWithBtn>(null);
+
+  const activeItemFromState = activeItem
+    ? todos.find((item) => activeItem.id === item.id)
+    : null;
 
   useEffect(() => {
     setTodoList(todos);
@@ -56,11 +60,11 @@ export const TodoList = () => {
     setTodoList(
       todosList.map((e) => {
         if (currentTodo) {
-          if (e.key === item.key) {
-            return { ...e, key: currentTodo.key };
+          if (e.time === item.time) {
+            return { ...e, time: currentTodo.time };
           }
-          if (e.key === currentTodo.key) {
-            return { ...e, key: item.key };
+          if (e.time === currentTodo.time) {
+            return { ...e, time: item.time };
           }
         }
         return e;
@@ -92,35 +96,42 @@ export const TodoList = () => {
     }
   };
 
-  const addNewTask = (name: string, id: any) => {
-    if (name !== "") {
-      dispatch(addTask(name, id));
+  const addNewTask = (name: string) => {
+    if (name !== "" && activeItem) {
+      dispatch(addTask(name, activeItem.id));
     } else {
       alert("Введите что-нибудь");
     }
   };
 
-  const addNewTaskKey = (name: string, id: any) => {
-    if (name !== "") {
-      dispatch(addTask(name, id));
+  const addNewTaskKey = (name: string) => {
+    if (name !== "" && activeItem) {
+      dispatch(addTask(name, activeItem.id));
     } else {
       alert("Введите что-нибудь");
     }
   };
 
-  const onClickComplete = (id: string) => {
+  const onClickCompleteTodo = (id: number) => {
     dispatch(checkTodo(id));
   };
 
-  const onClickDelete = (id: string) => {
+  const onClickCompleteTask = (id: number) => {
+    dispatch(checkTask(id));
+  };
+
+  const onClickDeleteTodo = (id: number) => {
     if (window.confirm("Delete ToDo?")) {
       dispatch(deleteTodo(id));
     }
   };
 
+  const onClickDeleteTask = (id: number) => {
+    dispatch(deleteTask(id));
+  };
+
   const onClickItem = (item: any) => {
     setActiveItem(item);
-    console.log(activeItem);
   };
 
   return (
@@ -140,16 +151,16 @@ export const TodoList = () => {
           />
         </div>
 
-        {todosList?.map((item: any) => {
+        {todosList.map((item: any) => {
           return (
-            <div onClick={() => onClickItem(item)}>
+            <div key={item.id} onClick={() => onClickItem(item)}>
               <TodoItem
-                key={item.time}
                 id={item.id}
+                time={item.time}
                 name={item.name}
                 completed={item.completed}
-                onComplete={() => onClickComplete(item.id)}
-                onDelete={() => onClickDelete(item.id)}
+                onComplete={() => onClickCompleteTodo(item.id)}
+                onDelete={() => onClickDeleteTodo(item.id)}
                 onDragStart={(e) => dragStartcHandler(e, item)}
                 onDragLeave={(e) => dragEndHandler(e)}
                 onDragEnd={(e) => dragEndHandler(e)}
@@ -160,7 +171,7 @@ export const TodoList = () => {
           );
         })}
 
-        <TodoMenu
+        {/* <TodoMenu
           src={
             isDark
               ? "../../assets/images/tickWhite.svg"
@@ -175,36 +186,36 @@ export const TodoList = () => {
               : "../../assets/images/basketDark.svg"
           }
           text="Basket"
-        />
+        /> */}
 
         <TodoAdd addNewTodo={addNewTodo} addNewTodoKey={addNewTodoKey} />
       </div>
 
       <div className={styles.todoTasks}>
-        {todosList && activeItem && <Title text={activeItem} />}
-        {/* {todos.map((item: any) => {
+        {todosList && activeItemFromState && (
+          <Title text={activeItemFromState} />
+        )}
+        {activeItemFromState?.tasks?.map((item: any) => {
           return (
-            <div>
-              <TaskItem
-                key={item.time}
-                id={item.id}
-                name={item.name}
-                completed={item.completed}
-                onComplete={() => onClickComplete(item.id)}
-                onDelete={() => onClickDelete(item.id)}
-                onDragStart={(e) => dragStartcHandler(e, item)}
-                onDragLeave={(e) => dragEndHandler(e)}
-                onDragEnd={(e) => dragEndHandler(e)}
-                onDragOver={(e) => dragOverHandler(e)}
-                onDrop={(e) => dropHandler(e, item)}
-                
-            
-                
-              />
-            </div>
+            <TodoItem
+              key={item.id}
+              id={item.id}
+              time={item.time}
+              name={item.name}
+              completed={item.completed}
+              onComplete={() => onClickCompleteTask(item.id)}
+              onDelete={() => onClickDeleteTask(item.id)}
+              onDragStart={(e) => dragStartcHandler(e, item)}
+              onDragLeave={(e) => dragEndHandler(e)}
+              onDragEnd={(e) => dragEndHandler(e)}
+              onDragOver={(e) => dragOverHandler(e)}
+              onDrop={(e) => dropHandler(e, item)}
+            />
           );
-        })} */}
-        {/* <TodoAdd addNewTodo={addNewTask} addNewTodoKey={addNewTaskKey} /> */}
+        })}
+        {activeItemFromState ? (
+          <TodoAdd addNewTodo={addNewTask} addNewTodoKey={addNewTaskKey} />
+        ) : null}
       </div>
     </div>
   );

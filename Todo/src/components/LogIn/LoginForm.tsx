@@ -65,7 +65,7 @@ export const LoginForm = () => {
     <>
       <Input
         type="email"
-        text="Name"
+        text="Email"
         value={email}
         onChange={onChangeEmail}
         error={errors.email}
@@ -79,6 +79,7 @@ export const LoginForm = () => {
       />
 
       <Button text="Login" onClick={onClick} />
+
       {<p style={{ color: theme.textName }}>{errorValues}</p>}
     </>
   );

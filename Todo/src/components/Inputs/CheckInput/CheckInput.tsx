@@ -1,10 +1,20 @@
 import styles from "./CheckInput.module.css";
 
-export const CheckInput = () => {
+interface IProps {
+  value: boolean;
+  onChange: () => void;
+}
+
+export const CheckInput = ({ value, onChange }: IProps) => {
   return (
     <div className={styles.checkbox}>
-      <input type="checkbox" id="check" className={styles.input} />
-      <label htmlFor="check" className={styles.label}>
+      <label className={value ? styles.labelActive : styles.label}>
+        <input
+          type="checkbox"
+          className={styles.input}
+          checked={value}
+          onChange={onChange}
+        />
         <img src="./assets/images/check.svg" alt="check" />
       </label>
     </div>

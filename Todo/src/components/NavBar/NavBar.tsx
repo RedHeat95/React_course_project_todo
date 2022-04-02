@@ -25,7 +25,7 @@ export const NavBar = () => {
       style={{ background: theme.backgroundHeader }}
     >
       <Container>
-        <div className={styles.navbarMebu}>
+        <div className={styles.navbarMenu}>
           <NavLink
             className={styles.pageName}
             style={{ color: theme.textName }}
@@ -40,19 +40,22 @@ export const NavBar = () => {
             <NavLink
               className={styles.pageName}
               style={{ color: theme.textName }}
+              onClick={changeIsOpen}
               to="/"
               exact
             >
-              LogOut
-              <img
-                className={styles.exit}
-                src={
-                  isDark
-                    ? "./assets/images/exitWhite.png"
-                    : "./assets/images/exitDark.png"
-                }
-                alt="exit"
-              />
+              <div>
+                LogOut
+                <img
+                  className={styles.exit}
+                  src={
+                    isDark
+                      ? "./assets/images/exitWhite.png"
+                      : "./assets/images/exitDark.png"
+                  }
+                  alt="exit"
+                />
+              </div>
             </NavLink>
           ) : (
             <>

@@ -6,7 +6,6 @@
 .headerMenu {
   display: flex;
   align-items: center;
-  padding: 1rem 0;
 }
 
 .userData {
@@ -16,12 +15,7 @@
 
 .userAvatar {
   margin: 0 2rem;
-  max-width: 3rem;
+  max-width: 2rem;
   border-radius: 50px;
   background-color: #ffffff;
-}
-
-.userName {
-  font-family: "Roboto";
-  font-size: 2rem;
 }

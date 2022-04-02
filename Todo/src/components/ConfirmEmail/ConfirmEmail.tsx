@@ -2,20 +2,20 @@ import { useContext } from "react";
 
 import { ThemeContext } from "../../context/ThemeContext";
 
-import styles from "./Support.module.css";
+import styles from "./ConfirmEmail.module.css";
 import { Container } from "../Container/Container";
 
-export const Support = () => {
+export const ConfirmEmail = () => {
   const { theme } = useContext(ThemeContext);
 
   return (
     <div
-      className={styles.support}
+      className={styles.confirm}
       style={{ background: theme.backgroundColor }}
     >
       <Container>
-        <p className={styles.supportName} style={{ color: theme.textName }}>
-          Мы слышим! Мы думаем! Мы стараемся!
+        <p className={styles.confirmEmail} style={{ color: theme.textName }}>
+          Registration Confirmation
         </p>
       </Container>
     </div>

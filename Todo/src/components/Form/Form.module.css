@@ -2,7 +2,7 @@
   flex: 1;
 }
 
-.formWrraper {
+.formWrapper {
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -15,6 +15,6 @@
 }
 
 .title {
-  font-size: 2rem;
+  font-size: 1.5rem;
   cursor: pointer;
 }

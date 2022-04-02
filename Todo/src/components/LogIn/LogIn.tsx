@@ -9,8 +9,9 @@ import { LoginForm } from "./LoginForm";
 import { RegistrationForm } from "./RegistrationForm";
 
 export const LogIn = () => {
-  const location = useLocation();
   const { theme } = useContext(ThemeContext);
+
+  const location = useLocation();
 
   const [isLogged, setIsLogged] = useState(location.pathname.includes("login"));
 

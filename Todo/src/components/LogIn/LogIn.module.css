@@ -1,5 +1,4 @@
 .logIn {
-  padding-top: 3.5rem;
   flex: 1;
 }
 
@@ -9,11 +8,11 @@
   align-items: center;
   padding: 1rem;
   max-width: 20rem;
+  width: 100%;
   margin: 0 auto;
 }
 
 .formTitle {
   margin-bottom: 1rem;
-  font-family: "Robot";
-  font-size: 3rem;
+  font-size: 2rem;
 }

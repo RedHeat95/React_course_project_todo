@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, useContext } from "react";
+import { useCallback, useState, useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -11,9 +11,10 @@ import { Button } from "../Buttons/Button/Button";
 import { Input } from "../Inputs/Input/Input";
 
 export const RegistrationForm = () => {
+  const { theme } = useContext(ThemeContext);
+
   const dispatch = useDispatch();
   const history = useHistory();
-  const { theme } = useContext(ThemeContext);
 
   const [username, setUserName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -41,7 +42,6 @@ export const RegistrationForm = () => {
     setUserName(value);
 
     const error = validationService.validateName(value);
-
     setErrors((errors) => ({ ...errors, userName: error }));
   }, []);
 
@@ -50,7 +50,6 @@ export const RegistrationForm = () => {
     setEmail(value);
 
     const error = validationService.validateEmail(value);
-
     setErrors((errors) => ({ ...errors, email: error }));
   }, []);
 
@@ -59,7 +58,6 @@ export const RegistrationForm = () => {
     setPassword(value);
 
     const error = validationService.validatePassword(value);
-
     setErrors((errors) => ({ ...errors, password: error }));
   }, []);
 
@@ -81,11 +79,11 @@ export const RegistrationForm = () => {
 
     const values = Object.values(errors);
     const isValid = values.every((value) => value === "");
-
     if (isValid) {
       dispatch(register({ username, email, password }));
     }
   };
+
   const errorValues = error ? Object.values(error).flat() : "";
 
   return (
@@ -95,7 +93,7 @@ export const RegistrationForm = () => {
         text="Name"
         value={username}
         onChange={onChangeUserName}
-        error={errors.email}
+        error={errors.username}
       />
       <Input
         type="email"
@@ -109,7 +107,7 @@ export const RegistrationForm = () => {
         text="Password"
         value={password}
         onChange={onChangePassword}
-        error={errors.email}
+        error={errors.password}
       />
       <Input
         type="password"
@@ -120,6 +118,7 @@ export const RegistrationForm = () => {
       />
 
       <Button text="Registration" onClick={onClick} />
+
       {<p style={{ color: theme.textName }}>{errorValues}</p>}
     </>
   );

@@ -12,9 +12,12 @@ export const Modal = ({ children, isVisible, onClose }: IProps) => {
     <>
       <div className={styles.background} onClick={onClose}></div>
       <div className={styles.inner}>
-        <div className={styles.closeBtn} onClick={onClose}>
-          X
-        </div>
+        <img
+          src="./assets/images/close.svg"
+          alt="closeModal"
+          className={styles.close}
+          onClick={onClose}
+        />
         {children}
       </div>
     </>

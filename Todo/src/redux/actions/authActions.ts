@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 
-import { getProfile, loginUser, registerUser } from "../../services/auth";
+import { getProfile, loginUser } from "../../services/auth";
 import { ACTIONS } from "../constants";
 
 interface IRegisterData {
@@ -9,13 +9,34 @@ interface IRegisterData {
   password: string;
 }
 
+interface IProfile {
+  id: number;
+  username: string;
+  email: string;
+}
+
 export const register = ({ username, email, password }: IRegisterData) => {
   return async (dispatch: Dispatch) => {
     try {
-      const result = await registerUser(username, email, password);
+      const response = await fetch(
+        "https://studapi.teachmeskills.by/auth/users/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, email, password }),
+        }
+      );
+
+      const result = await response.json();
+
+      if (response.ok === false) {
+        throw result;
+      }
 
       dispatch(registerSuccess(result));
-    } catch (error: any) {
+    } catch (error) {
       dispatch(registerFailure(error));
     }
   };
@@ -28,11 +49,6 @@ const registerFailure = (error: any) => {
   };
 };
 
-interface IProfile {
-  email: string;
-  username: string;
-  id: number;
-}
 const registerSuccess = (profile: IProfile) => {
   return {
     type: ACTIONS.REGISTER_SUCCESS,
@@ -61,5 +77,12 @@ export const login = (email: string, password: string) => {
     } catch (error) {
       dispatch(registerFailure(error));
     }
+  };
+};
+
+export const addAvatar = (avatar: string) => {
+  return {
+    type: ACTIONS.ADD_AVATAR,
+    avatar,
   };
 };

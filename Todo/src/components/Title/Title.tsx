@@ -1,4 +1,9 @@
+import { useContext } from "react";
+
 import { ITodoItem } from "../../redux/reducers/todosReducer";
+
+import { ThemeContext } from "../../context/ThemeContext";
+
 import styles from "./Title.module.css";
 
 interface IProps {
@@ -6,16 +11,18 @@ interface IProps {
 }
 
 export const Title = ({ text }: IProps) => {
+  const { theme } = useContext(ThemeContext);
+
   return (
     <div className={styles.title}>
-      <h3 className={styles.titleText}>
+      <p className={styles.titleText} style={{ color: theme.textName }}>
         {text.name}
         <img
           className={styles.titleImg}
           src="./assets/images/edit.svg"
           alt="edit"
         />
-      </h3>
+      </p>
     </div>
   );
 };

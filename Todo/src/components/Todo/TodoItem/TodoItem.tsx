@@ -32,7 +32,6 @@ export const TodoItem = ({
   return (
     <div
       className={styles.todoItem}
-      style={{ background: theme.backgroundTodo }}
       onDragStart={onDragStart}
       onDragLeave={onDragLeave}
       onDragEnd={onDragEnd}
@@ -40,12 +39,7 @@ export const TodoItem = ({
       onDrop={onDrop}
       draggable={true}
     >
-      <div className={styles.checkbox} onClick={onComplete}>
-        <input type="checkbox" id="check" className={styles.input} />
-        <label htmlFor="check" className={styles.label}>
-          <img src="./assets/images/check.svg" alt="check" />
-        </label>
-      </div>
+      <CheckInput value={completed} onChange={onComplete} />
 
       <span
         className={styles.todoItemText}
@@ -60,7 +54,7 @@ export const TodoItem = ({
       <img
         className={styles.todoItemImgRemove}
         src="../../assets/images/remove.svg"
-        alt="basket"
+        alt="remove"
         onClick={onDelete}
       />
     </div>
