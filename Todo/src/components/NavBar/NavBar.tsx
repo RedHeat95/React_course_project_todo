@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 import { IState } from "../../redux/store";
@@ -10,14 +10,20 @@ import styles from "./NavBar.module.css";
 import { Container } from "../Container/Container";
 import { ToggleButton } from "../Buttons/ToggleButton/ToggleButton";
 import { BurgerButton } from "../Buttons/BurgerButton/BurgerButton";
+import { logOut } from "../../redux/actions/authActions";
 
 export const NavBar = () => {
   const { changeIsOpen } = useContext(HeaderContext);
   const { isDark, changeIsDark, theme } = useContext(ThemeContext);
+  const dispatch = useDispatch();
 
   const isLoggedIn = useSelector(
     (state: IState) => state.authReducer.isLoggedIn
   );
+
+  const logout = () => {
+    dispatch(logOut());
+  };
 
   return (
     <div
@@ -44,7 +50,7 @@ export const NavBar = () => {
               to="/"
               exact
             >
-              <div>
+              <div onClick={logout}>
                 LogOut
                 <img
                   className={styles.exit}

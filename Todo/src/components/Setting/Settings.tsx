@@ -17,7 +17,8 @@ export const Setting = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [drag, setDrag] = useState(false);
 
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState<Blob | null>(null);
+  const [imageFile, setImageFile] = useState("");
 
   const dragStartHandler = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -29,14 +30,14 @@ export const Setting = () => {
     setDrag(false);
   };
 
-  const onDropHandler = (e: any) => {
+  const onDropHandler = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setImage(e.dataTransfer.files[0]);
     const reader = new FileReader();
     reader.readAsDataURL(e.dataTransfer.files[0]);
 
     reader.onload = (e: any) => {
-      setImage(e.target.result);
+      setImageFile(e.target.result);
     };
 
     setDrag(false);
@@ -44,12 +45,14 @@ export const Setting = () => {
   };
 
   const removeImage = () => {
-    setImage("");
+    setImage(null);
+    setImageFile("");
   };
 
   const addNewAvatar = () => {
-    dispatch(addAvatar(image));
-    setImage("");
+    dispatch(addAvatar(imageFile));
+    setImage(null);
+    setImageFile("");
   };
 
   return (
@@ -86,7 +89,11 @@ export const Setting = () => {
             </div>
             {image ? (
               <>
-                <img className={styles.prevImg} src={image} alt="new avatar" />
+                <img
+                  className={styles.prevImg}
+                  src={imageFile}
+                  alt="new avatar"
+                />
                 <Button text="Remove image" onClick={removeImage} />
               </>
             ) : null}

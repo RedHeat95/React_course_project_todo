@@ -29,7 +29,7 @@ export const authReducer = (state = defaultState, action: any) => {
       id: action.id,
       username: action.username,
       email: action.email,
-      avatar: action.avatar,
+      avatar: "",
       error: null,
     };
   }
@@ -41,7 +41,7 @@ export const authReducer = (state = defaultState, action: any) => {
       id: action.id,
       username: action.username,
       email: action.email,
-      avatar: action.avatar,
+      avatar: "",
       error: null,
     };
   }
@@ -50,6 +50,13 @@ export const authReducer = (state = defaultState, action: any) => {
     return {
       ...state,
       avatar: action.avatar,
+    };
+  }
+
+  if (action.type === ACTIONS.LOGOUT) {
+    return {
+      ...state,
+      isLoggedIn: false,
     };
   }
 

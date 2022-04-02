@@ -14,6 +14,7 @@ export interface ITodoItemWithBtn extends ITodoItem {
   onDragEnd: (e: DragEvent<HTMLDivElement>) => void;
   onDragOver: (e: DragEvent<HTMLDivElement>) => void;
   onDrop: (e: DragEvent<HTMLDivElement>) => void;
+  onClick?: () => void;
 }
 
 export const TodoItem = ({
@@ -26,6 +27,7 @@ export const TodoItem = ({
   onDragEnd,
   onDragOver,
   onDrop,
+  onClick,
 }: ITodoItemWithBtn) => {
   const { theme } = useContext(ThemeContext);
 
@@ -38,6 +40,7 @@ export const TodoItem = ({
       onDragOver={onDragOver}
       onDrop={onDrop}
       draggable={true}
+      onClick={onClick}
     >
       <CheckInput value={completed} onChange={onComplete} />
 

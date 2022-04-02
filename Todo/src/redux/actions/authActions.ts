@@ -86,3 +86,8 @@ export const addAvatar = (avatar: string) => {
     avatar,
   };
 };
+export const logOut = () => {
+  return {
+    type: ACTIONS.LOGOUT,
+  };
+};

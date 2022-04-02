@@ -1,6 +1,6 @@
 import { useState, DragEvent, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import { DragDropContext } from "react-beautiful-dnd";
 import { IState } from "../../../redux/store";
 import {
   addTask,
@@ -10,6 +10,8 @@ import {
   deleteTask,
   deleteTodo,
 } from "../../../redux/actions/todosActions";
+import { ITodoItem } from "../../../redux/reducers/todosReducer";
+
 import { ThemeContext } from "../../../context/ThemeContext";
 
 import styles from "./TodoList.module.css";
@@ -20,12 +22,13 @@ import { Title } from "../../Title/Title";
 
 export const TodoList = () => {
   const { isDark, theme } = useContext(ThemeContext);
-
   const dispatch = useDispatch();
   const todos = useSelector((state: IState) => state.todosReducer.todos);
 
   const [todosList, setTodoList] = useState(todos);
   const [currentTodo, setCurrentTodo] = useState<null | ITodoItemWithBtn>(null);
+  const [currentTask, setCurrentTask] = useState<null | ITodoItemWithBtn>(null);
+
   const [activeItem, setActiveItem] = useState<null | ITodoItemWithBtn>(null);
 
   const activeItemFromState = activeItem
@@ -41,6 +44,7 @@ export const TodoList = () => {
     item: ITodoItemWithBtn
   ) => {
     setCurrentTodo(item);
+    console.log("dragStartcHandler", item);
   };
 
   const dragEndHandler = (e: DragEvent<HTMLDivElement>) => {
@@ -51,29 +55,57 @@ export const TodoList = () => {
     e.preventDefault();
   };
 
-  const dropHandler = (
+  const dropHandlerTodo = (
     e: DragEvent<HTMLDivElement>,
     item: ITodoItemWithBtn
   ) => {
     e.preventDefault();
+    console.log(item);
 
     setTodoList(
-      todosList.map((e) => {
+      todosList.map((e: ITodoItem) => {
         if (currentTodo) {
-          if (e.time === item.time) {
+          if (e.id === item.id) {
             return { ...e, time: currentTodo.time };
           }
-          if (e.time === currentTodo.time) {
+          if (e.id === currentTodo.id) {
             return { ...e, time: item.time };
           }
         }
+
         return e;
       })
     );
   };
 
-  const sortCards = (a: any, b: any): any => {
-    if (a.key > b.key) {
+  const dropHandlerTask = (
+    e: DragEvent<HTMLDivElement>,
+    item: ITodoItemWithBtn
+  ) => {
+    e.preventDefault();
+    console.log(item);
+
+    setTodoList(
+      todosList.map((e: ITodoItem) => {
+        e.tasks?.map((elem: any) => {
+          if (currentTask) {
+            if (elem.id === item.id) {
+              return { ...elem, time: currentTask.time };
+            }
+            if (elem.id === currentTask.id) {
+              return { ...elem, time: item.time };
+            }
+          }
+          return elem;
+        });
+
+        return e;
+      })
+    );
+  };
+
+  const sortTodo = (a: ITodoItem, b: ITodoItem): any => {
+    if (a.time > b.time) {
       return 1;
     } else {
       return -1;
@@ -116,21 +148,21 @@ export const TodoList = () => {
     dispatch(checkTodo(id));
   };
 
-  const onClickCompleteTask = (id: number) => {
-    dispatch(checkTask(id));
-  };
-
   const onClickDeleteTodo = (id: number) => {
     if (window.confirm("Delete ToDo?")) {
       dispatch(deleteTodo(id));
     }
   };
 
+  const onClickCompleteTask = (id: number) => {
+    dispatch(checkTask(id));
+  };
+
   const onClickDeleteTask = (id: number) => {
     dispatch(deleteTask(id));
   };
 
-  const onClickItem = (item: any) => {
+  const onClickItem = (item: ITodoItemWithBtn) => {
     setActiveItem(item);
   };
 
@@ -151,23 +183,23 @@ export const TodoList = () => {
           />
         </div>
 
-        {todosList.map((item: any) => {
+        {todosList.sort(sortTodo).map((item: any) => {
           return (
-            <div key={item.id} onClick={() => onClickItem(item)}>
-              <TodoItem
-                id={item.id}
-                time={item.time}
-                name={item.name}
-                completed={item.completed}
-                onComplete={() => onClickCompleteTodo(item.id)}
-                onDelete={() => onClickDeleteTodo(item.id)}
-                onDragStart={(e) => dragStartcHandler(e, item)}
-                onDragLeave={(e) => dragEndHandler(e)}
-                onDragEnd={(e) => dragEndHandler(e)}
-                onDragOver={(e) => dragOverHandler(e)}
-                onDrop={(e) => dropHandler(e, item)}
-              />
-            </div>
+            <TodoItem
+              key={item.id}
+              id={item.id}
+              time={item.time}
+              name={item.name}
+              completed={item.completed}
+              onComplete={() => onClickCompleteTodo(item.id)}
+              onDelete={() => onClickDeleteTodo(item.id)}
+              onDragStart={(e) => dragStartcHandler(e, item)}
+              onDragLeave={(e) => dragEndHandler(e)}
+              onDragEnd={(e) => dragEndHandler(e)}
+              onDragOver={(e) => dragOverHandler(e)}
+              onDrop={(e) => dropHandlerTodo(e, item)}
+              onClick={() => onClickItem(item)}
+            />
           );
         })}
 
@@ -195,7 +227,7 @@ export const TodoList = () => {
         {todosList && activeItemFromState && (
           <Title text={activeItemFromState} />
         )}
-        {activeItemFromState?.tasks?.map((item: any) => {
+        {activeItemFromState?.tasks?.sort(sortTodo).map((item: any) => {
           return (
             <TodoItem
               key={item.id}
@@ -209,7 +241,7 @@ export const TodoList = () => {
               onDragLeave={(e) => dragEndHandler(e)}
               onDragEnd={(e) => dragEndHandler(e)}
               onDragOver={(e) => dragOverHandler(e)}
-              onDrop={(e) => dropHandler(e, item)}
+              onDrop={(e) => dropHandlerTask(e, item)}
             />
           );
         })}
