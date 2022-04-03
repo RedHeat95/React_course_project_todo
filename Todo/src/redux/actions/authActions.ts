@@ -83,9 +83,10 @@ export const login = (email: string, password: string) => {
 export const addAvatar = (avatar: string) => {
   return {
     type: ACTIONS.ADD_AVATAR,
-    avatar,
+    avatar: avatar,
   };
 };
+
 export const logOut = () => {
   return {
     type: ACTIONS.LOGOUT,

@@ -19,3 +19,9 @@
   flex: 1;
   padding: 3rem 3rem 0;
 }
+
+.textEmpty {
+  text-align: center;
+  padding-top: 1rem;
+  opacity: 0.3;
+}

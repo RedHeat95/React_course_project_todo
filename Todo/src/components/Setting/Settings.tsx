@@ -18,7 +18,9 @@ export const Setting = () => {
   const [drag, setDrag] = useState(false);
 
   const [image, setImage] = useState<Blob | null>(null);
-  const [imageFile, setImageFile] = useState("");
+  const [imageFile, setImageFile] = useState<any>(
+    localStorage.getItem("avatar")
+  );
 
   const dragStartHandler = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -38,6 +40,7 @@ export const Setting = () => {
 
     reader.onload = (e: any) => {
       setImageFile(e.target.result);
+      localStorage.setItem("avatar", JSON.stringify(imageFile));
     };
 
     setDrag(false);
@@ -46,13 +49,11 @@ export const Setting = () => {
 
   const removeImage = () => {
     setImage(null);
-    setImageFile("");
   };
 
   const addNewAvatar = () => {
     dispatch(addAvatar(imageFile));
     setImage(null);
-    setImageFile("");
   };
 
   return (

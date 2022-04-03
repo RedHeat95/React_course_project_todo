@@ -10,8 +10,8 @@ export const saveToLocalStorage = (state: IState) => {
 
 export const loadFromLocalStorage = () => {
   try {
-    const stateStr = localStorage.getItem("state");
-    return stateStr ? JSON.parse(stateStr) : undefined;
+    const stateStore = localStorage.getItem("state");
+    return stateStore ? JSON.parse(stateStore) : undefined;
   } catch (e) {
     alert(e);
   }

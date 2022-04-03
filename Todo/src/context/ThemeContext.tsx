@@ -9,6 +9,7 @@ const darkTheme = {
   burgerButton: "#ffffff",
   username: "#ffffff",
   textName: "#ffffff",
+  title: "#ffffff",
 };
 
 const lightTheme = {
@@ -20,6 +21,7 @@ const lightTheme = {
   burgerButton: "#000000",
   username: "#000000",
   textName: "#000000",
+  title: "#4dd599",
 };
 
 export const ThemeContext = createContext({
