@@ -1,4 +1,4 @@
-import { useContext, useState, DragEvent } from "react";
+import { useContext, useState, DragEvent, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import { ThemeContext } from "../../context/ThemeContext";
@@ -9,6 +9,8 @@ import { Container } from "../Container/Container";
 import { Button } from "../Buttons/Button/Button";
 import { Modal } from "../Modal/Modal";
 
+const imgFromLocalStorage = JSON.parse(localStorage.getItem("img") || "[]");
+
 export const Setting = () => {
   const { isDark, theme } = useContext(ThemeContext);
 
@@ -18,9 +20,11 @@ export const Setting = () => {
   const [drag, setDrag] = useState(false);
 
   const [image, setImage] = useState<Blob | null>(null);
-  const [imageFile, setImageFile] = useState<any>(
-    localStorage.getItem("avatar")
-  );
+  const [imageFile, setImageFile] = useState(imgFromLocalStorage);
+
+  useEffect(() => {
+    localStorage.setItem("img", JSON.stringify(imageFile));
+  }, [imageFile]);
 
   const dragStartHandler = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -40,7 +44,6 @@ export const Setting = () => {
 
     reader.onload = (e: any) => {
       setImageFile(e.target.result);
-      localStorage.setItem("avatar", JSON.stringify(imageFile));
     };
 
     setDrag(false);

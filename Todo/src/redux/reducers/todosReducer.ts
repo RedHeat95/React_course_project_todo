@@ -1,6 +1,6 @@
 import { ACTIONS } from "../constants";
 
-interface ITask {
+export interface ITask {
   id: number;
   time: number;
   completed: boolean;

@@ -10,7 +10,7 @@ import {
   deleteTask,
   deleteTodo,
 } from "../../../redux/actions/todosActions";
-import { ITodoItem } from "../../../redux/reducers/todosReducer";
+import { ITask, ITodoItem } from "../../../redux/reducers/todosReducer";
 
 import { ThemeContext } from "../../../context/ThemeContext";
 
@@ -20,25 +20,28 @@ import { ITodoItemWithBtn, TodoItem } from "../TodoItem/TodoItem";
 import { TodoAdd } from "../TodoAdd/TodoAdd";
 import { Title } from "../../Title/Title";
 
+const todoFromLocalStorage = JSON.parse(localStorage.getItem("todos") || "[]");
+
 export const TodoList = () => {
   const { isDark, theme } = useContext(ThemeContext);
+
   const dispatch = useDispatch();
+
   const todos = useSelector((state: IState) => state.todosReducer.todos);
 
-  const [todosList, setTodosList] = useState(todos);
   const [showAll, setShowAll] = useState(false);
+  const [todosList, setTodosList] = useState(todos);
   const [currentTodo, setCurrentTodo] = useState<null | ITodoItemWithBtn>(null);
   const [currentTask, setCurrentTask] = useState<null | ITodoItemWithBtn>(null);
-
   const [activeItem, setActiveItem] = useState<null | ITodoItemWithBtn>(null);
-
-  const activeItemFromState = activeItem
-    ? todos.find((item) => activeItem.id === item.id)
-    : null;
 
   useEffect(() => {
     setTodosList(todos);
   }, [todos]);
+
+  const activeItemFromState = activeItem
+    ? todosList.find((item: ITodoItem) => activeItem.id === item.id)
+    : null;
 
   const dragStartcHandler = (
     e: DragEvent<HTMLDivElement>,
@@ -62,22 +65,24 @@ export const TodoList = () => {
     e.preventDefault();
   };
 
-  const dropHandlerTodo = (e: any, item: ITodoItemWithBtn) => {
+  const dropHandlerTodo = (
+    e: DragEvent<HTMLDivElement>,
+    item: ITodoItemWithBtn
+  ) => {
     e.preventDefault();
 
-    setTodosList(
-      todosList.map((e: ITodoItem) => {
-        if (currentTodo) {
-          if (e.id === item.id) {
-            return { ...e, time: currentTodo.time };
-          }
-          if (e.id === currentTodo.id) {
-            return { ...e, time: item.time };
-          }
+    const newTodos = todosList.map((elem: ITodoItem) => {
+      if (currentTodo) {
+        if (elem.id === item.id) {
+          return currentTodo;
         }
-        return e;
-      })
-    );
+        if (elem.id === currentTodo.id) {
+          return item;
+        }
+      }
+      return elem;
+    });
+    setTodosList(newTodos);
   };
 
   const dropHandlerTask = (
@@ -85,39 +90,26 @@ export const TodoList = () => {
     item: ITodoItemWithBtn
   ) => {
     e.preventDefault();
-    // setTodosList(
-    //   todosList.map((e: ITodoItem) => {
-    //     e.tasks?.map((elem: ITodoItem) => {
-    //       if (currentTask) {
-    //         if (elem.id === item.id) {
-    //           return { ...elem, time: currentTask.time };
-    //         }
-    //         if (elem.id === currentTask.id) {
-    //           return { ...elem, time: item.time };
-    //         }
-    //       }
-    //       return elem;
-    //     });
 
-    //     return e;
-    //   })
-    // );
-  };
+    const newTodos = todosList.map((element: ITodoItem) => {
+      if (activeItem) {
+        const newTasks = element.tasks?.map((elem: ITask) => {
+          if (currentTask) {
+            if (elem.id === item.id) {
+              return currentTask;
+            }
+            if (elem.id === currentTask.id) {
+              return item;
+            }
+          }
+          return elem;
+        });
 
-  const sortTodo = (a: ITodoItem, b: ITodoItem) => {
-    if (a.time > b.time) {
-      return 1;
-    } else {
-      return -1;
-    }
-  };
-
-  const sortTask = (a: ITodoItem, b: ITodoItem) => {
-    if (a.time > b.time) {
-      return 1;
-    } else {
-      return -1;
-    }
+        return { ...element, tasks: newTasks };
+      }
+      return element;
+    });
+    setTodosList(newTodos);
   };
 
   const addNewTodo = (name: string) => {
@@ -179,7 +171,7 @@ export const TodoList = () => {
   };
 
   const onEditNameTitle = (id: number, name: string) => {
-    const newTodosTitle = todosList.map((item: any) => {
+    const newTodosTitle = todosList.map((item: ITodoItem) => {
       if (item.id === id) {
         item.name = name;
       }
@@ -215,7 +207,7 @@ export const TodoList = () => {
             setShowAll(false);
           }}
         >
-          {todosList.sort(sortTodo).map((item: any) => {
+          {todosList.map((item: any) => {
             return (
               <TodoItem
                 key={item.id}
@@ -223,7 +215,7 @@ export const TodoList = () => {
                 todoId={item.todoId}
                 time={item.time}
                 name={`${item.name} ${
-                  item.tasks.length > 0 ? ` (${item.tasks.length})` : ""
+                  item?.tasks?.length > 0 ? ` (${item.tasks?.length})` : ""
                 }`}
                 completed={item.completed}
                 onComplete={() => onClickCompleteTodo(item.id)}
@@ -244,7 +236,7 @@ export const TodoList = () => {
 
       <div className={styles.todoTasks}>
         {showAll ? (
-          todosList.map((elem: any) => {
+          todosList.map((elem: ITodoItem) => {
             return (
               <div className={styles.todoAll}>
                 <Title text={elem} onEditTitle={onEditNameTitle} />

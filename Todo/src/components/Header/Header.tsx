@@ -9,6 +9,8 @@ import { Container } from "../Container/Container";
 import { NavBar } from "../NavBar/NavBar";
 import { BurgerButton } from "../Buttons/BurgerButton/BurgerButton";
 
+const imgFromLocalStorage = JSON.parse(localStorage.getItem("img") || "[]");
+
 export const HeaderContext = createContext({
   isOpen: false,
   changeIsOpen: () => {},
@@ -39,7 +41,11 @@ export const Header = () => {
               <div className={styles.userData}>
                 <img
                   className={styles.userAvatar}
-                  src={avatar || "../assets/images/defaultAvatar.png"}
+                  src={
+                    avatar ||
+                    imgFromLocalStorage ||
+                    "../assets/images/defaultAvatar.png"
+                  }
                   alt="avatar"
                 />
                 <p

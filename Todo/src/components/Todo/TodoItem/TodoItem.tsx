@@ -1,6 +1,6 @@
 import { DragEvent, useContext } from "react";
 
-import { ITodoItem } from "../../../redux/reducers/todosReducer";
+import { ITask, ITodoItem } from "../../../redux/reducers/todosReducer";
 import { ThemeContext } from "../../../context/ThemeContext";
 
 import styles from "./TodoItem.module.css";
