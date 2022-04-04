@@ -16,10 +16,10 @@ export const addTask = (name: string, id: number) => {
   return { type: ACTIONS.ADD_TASKS, name: name, id };
 };
 
-export const checkTask = (id: number) => {
-  return { type: ACTIONS.CHECK_TASKS, id: id };
+export const checkTask = (id: number, todoId: number) => {
+  return { type: ACTIONS.CHECK_TASKS, id: id, todoId };
 };
 
-export const deleteTask = (id: number) => {
-  return { type: ACTIONS.DELETE_TASKS, id: id };
+export const deleteTask = (id: number, todoId: number) => {
+  return { type: ACTIONS.DELETE_TASKS, id: id, todoId };
 };

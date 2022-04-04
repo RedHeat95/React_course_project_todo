@@ -31,7 +31,7 @@
 
 .slider:before {
   content: "";
-  background-image: url("http://localhost:3000/assets/images/moon.svg");
+  background-image: url("../../assets/images/moon.svg");
   background-repeat: no-repeat;
   background-position: center;
   position: absolute;
@@ -50,7 +50,7 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-  background-image: url("http://localhost:3000/assets/images/moonDark.svg");
+  background-image: url("../../assets/images/moonDark.svg");
   background-color: #ffffff;
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);

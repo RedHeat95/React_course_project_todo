@@ -85,23 +85,23 @@ export const TodoList = () => {
     item: ITodoItemWithBtn
   ) => {
     e.preventDefault();
-    setTodosList(
-      todosList.map((e: ITodoItem) => {
-        e.tasks?.map((elem: ITodoItem) => {
-          if (currentTask) {
-            if (elem.id === item.id) {
-              return { ...elem, time: currentTask.time };
-            }
-            if (elem.id === currentTask.id) {
-              return { ...elem, time: item.time };
-            }
-          }
-          return elem;
-        });
+    // setTodosList(
+    //   todosList.map((e: ITodoItem) => {
+    //     e.tasks?.map((elem: ITodoItem) => {
+    //       if (currentTask) {
+    //         if (elem.id === item.id) {
+    //           return { ...elem, time: currentTask.time };
+    //         }
+    //         if (elem.id === currentTask.id) {
+    //           return { ...elem, time: item.time };
+    //         }
+    //       }
+    //       return elem;
+    //     });
 
-        return e;
-      })
-    );
+    //     return e;
+    //   })
+    // );
   };
 
   const sortTodo = (a: ITodoItem, b: ITodoItem) => {
@@ -163,11 +163,15 @@ export const TodoList = () => {
   };
 
   const onClickCompleteTask = (id: number) => {
-    dispatch(checkTask(id));
+    if (activeItem) {
+      dispatch(checkTask(id, activeItem.todoId));
+    }
   };
 
   const onClickDeleteTask = (id: number) => {
-    dispatch(deleteTask(id));
+    if (activeItem) {
+      dispatch(deleteTask(id, activeItem.todoId));
+    }
   };
 
   const onClickItem = (item: ITodoItemWithBtn) => {
@@ -216,6 +220,7 @@ export const TodoList = () => {
               <TodoItem
                 key={item.id}
                 id={item.id}
+                todoId={item.todoId}
                 time={item.time}
                 name={`${item.name} ${
                   item.tasks.length > 0 ? ` (${item.tasks.length})` : ""
@@ -248,6 +253,7 @@ export const TodoList = () => {
                     <TodoItem
                       key={item.id}
                       id={item.id}
+                      todoId={item.todoId}
                       time={item.time}
                       name={item.name}
                       completed={item.completed}
@@ -269,11 +275,12 @@ export const TodoList = () => {
             {todosList && activeItemFromState && (
               <Title text={activeItemFromState} onEditTitle={onEditNameTitle} />
             )}
-            {activeItemFromState?.tasks?.sort(sortTask)?.map((item: any) => {
+            {activeItemFromState?.tasks?.map((item: any) => {
               return (
                 <TodoItem
                   key={item.id}
                   id={item.id}
+                  todoId={item.todoId}
                   time={item.time}
                   name={item.name}
                   completed={item.completed}
