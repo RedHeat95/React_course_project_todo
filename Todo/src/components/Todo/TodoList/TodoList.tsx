@@ -20,8 +20,6 @@ import { ITodoItemWithBtn, TodoItem } from "../TodoItem/TodoItem";
 import { TodoAdd } from "../TodoAdd/TodoAdd";
 import { Title } from "../../Title/Title";
 
-const todoFromLocalStorage = JSON.parse(localStorage.getItem("todos") || "[]");
-
 export const TodoList = () => {
   const { isDark, theme } = useContext(ThemeContext);
 
@@ -215,7 +213,7 @@ export const TodoList = () => {
                 todoId={item.todoId}
                 time={item.time}
                 name={`${item.name} ${
-                  item?.tasks?.length > 0 ? ` (${item.tasks?.length})` : ""
+                  item.tasks.length > 0 ? ` (${item.tasks.length})` : ""
                 }`}
                 completed={item.completed}
                 onComplete={() => onClickCompleteTodo(item.id)}
@@ -287,7 +285,7 @@ export const TodoList = () => {
               );
             })}
 
-            {activeItem && !activeItemFromState?.tasks?.length && (
+            {activeItem && activeItemFromState?.tasks?.length === 0 && (
               <h1 className={styles.textEmpty}>No tasks</h1>
             )}
 
