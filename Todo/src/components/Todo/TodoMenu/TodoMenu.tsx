@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 
 import { ThemeContext } from "../../../context/ThemeContext";
 
@@ -11,17 +11,11 @@ interface IProps {
 
 export const TodoMenu = ({ src, text }: IProps) => {
   const { theme } = useContext(ThemeContext);
-  const [isActive, setisActive] = useState(false);
 
   return (
-    <div className={isActive ? styles.todomenuActive : styles.todomenu}>
+    <div className={styles.todomenu}>
       <img src={src} alt={text} className={styles.todomenuImg} />
-      <span
-        className={isActive ? styles.todomenuNameActive : styles.todomenuName}
-        style={{ color: theme.textName }}
-      >
-        {text}
-      </span>
+      <span style={{ color: theme.textName }}>{text}</span>
     </div>
   );
 };

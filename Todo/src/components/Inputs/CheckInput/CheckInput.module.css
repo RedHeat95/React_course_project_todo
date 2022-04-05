@@ -17,9 +17,15 @@
   border-radius: 30px;
 }
 
-.input:checked + .label {
+.labelActive {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  width: 20px;
   background-color: #4dd599;
-  border-color: #4dd599;
+  border: 2px solid #4dd599;
+  border-radius: 30px;
 }
 
 .label:hover {

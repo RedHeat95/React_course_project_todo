@@ -37,7 +37,7 @@ export const Input = ({
         onChange={onChange}
         onKeyDown={onKeyDown}
       />
-      {error ? <p>{error}</p> : null}
+      {error ? <p style={{ color: theme.textName }}>{error}</p> : null}
     </div>
   );
 };

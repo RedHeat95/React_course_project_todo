@@ -2,7 +2,7 @@
   padding-bottom: 0.5rem;
 }
 
-.navbarMebu {
+.navbarMenu {
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -11,13 +11,11 @@
 .pageName {
   display: flex;
   align-items: center;
-  font-family: "Roboto";
-  font-size: 1.5rem;
   text-decoration: none;
   cursor: pointer;
 }
 
-.pageName > .exit {
+.exit {
   margin-left: 1rem;
 }
 

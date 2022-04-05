@@ -1,26 +1,33 @@
-<h1 align="center">React Redux Template</h1>
-<div align="center">
-  <sub>React Redux Template for TeachMeSkills. Coded by 
-    <a href="https://github.com/dromanchuck">DR</a>
-  </sub> 
-</div>
+<h1 align="center">Todo</h1>
 
-<br/>
+## Description
 
-### Как использовать? ###
+**WITH DRAG AND DROP**
 
-Склонировать репозиторий, поменять название в `package.json` и использовать для реализации своих крутых идей.
+A todo list implemented from scratch. With the ability to create todo lists with tasks and drag lists and tasks between each other. I studied web development in TeachMeSkills courses, this is my first project, so don't expect too much from the source code.
 
-### Последовательность команд для создания такого шаблона самостоятельно:
+## About the project.
 
-1. `create-react-app --template typescript` - создаем react-проект с предустановленным typescript
-2. `npm install redux` - устанавливаем redux
-3. `npm install react-redux` - устанавливаем react-redux
-4. `npm install react-router-dom` - устанавливаем роутинг
-5. `npm install --save-dev @types/redux` - устанавливаем типы для библиотек выше
-6. `npm install --save-dev @types/react-router-dom` - устанавливаем типы для библиотек выше
-7. `npm install redux-devtools-extension` - устанавливаем библиотеку для работы Redux Dev tools
-8. `npm install redux-saga` - устанавливаем redux-saga
- 
+### Redux
 
+- to monitor the status when adding or changing todo.
 
+### 2 mode theme
+
+- Choose from 2 variants of theme, day or night.
+
+## Project setup
+
+```
+npm install
+```
+
+## Future scope
+
+- Add plan for the day.
+- Add tasks with a deadline.
+- improve the design.
+
+## Thank for support
+
+- Dmitry Romanchuk

@@ -17,7 +17,7 @@ export const ErrorPage = () => {
         <p className={styles.error} style={{ color: theme.textName }}>
           404
         </p>
-        <p className={styles.errorPageTitle} style={{ color: theme.textName }}>
+        <p style={{ color: theme.textName }}>
           The requested URL could not be found on this server. That's all we
           know.
         </p>

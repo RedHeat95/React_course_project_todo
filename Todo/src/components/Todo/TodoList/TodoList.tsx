@@ -5,9 +5,13 @@ import { IState } from "../../../redux/store";
 import {
   addTask,
   addTodo,
+  checkTask,
   checkTodo,
+  deleteTask,
   deleteTodo,
 } from "../../../redux/actions/todosActions";
+import { ITask, ITodoItem } from "../../../redux/reducers/todosReducer";
+
 import { ThemeContext } from "../../../context/ThemeContext";
 
 import styles from "./TodoList.module.css";
@@ -16,27 +20,39 @@ import { ITodoItemWithBtn, TodoItem } from "../TodoItem/TodoItem";
 import { TodoAdd } from "../TodoAdd/TodoAdd";
 import { Title } from "../../Title/Title";
 
-import { TaskItem } from "../TaskItem/TaskItem";
-
 export const TodoList = () => {
   const { isDark, theme } = useContext(ThemeContext);
 
   const dispatch = useDispatch();
+
   const todos = useSelector((state: IState) => state.todosReducer.todos);
 
-  const [todosList, setTodoList] = useState(todos);
+  const [showAll, setShowAll] = useState(false);
+  const [todosList, setTodosList] = useState(todos);
   const [currentTodo, setCurrentTodo] = useState<null | ITodoItemWithBtn>(null);
+  const [currentTask, setCurrentTask] = useState<null | ITodoItemWithBtn>(null);
   const [activeItem, setActiveItem] = useState<null | ITodoItemWithBtn>(null);
 
   useEffect(() => {
-    setTodoList(todos);
+    setTodosList(todos);
   }, [todos]);
+
+  const activeItemFromState = activeItem
+    ? todosList.find((item: ITodoItem) => activeItem.id === item.id)
+    : null;
 
   const dragStartcHandler = (
     e: DragEvent<HTMLDivElement>,
     item: ITodoItemWithBtn
   ) => {
     setCurrentTodo(item);
+  };
+
+  const dragStartcHandlerTasks = (
+    e: DragEvent<HTMLDivElement>,
+    item: ITodoItemWithBtn
+  ) => {
+    setCurrentTask(item);
   };
 
   const dragEndHandler = (e: DragEvent<HTMLDivElement>) => {
@@ -47,33 +63,51 @@ export const TodoList = () => {
     e.preventDefault();
   };
 
-  const dropHandler = (
+  const dropHandlerTodo = (
     e: DragEvent<HTMLDivElement>,
     item: ITodoItemWithBtn
   ) => {
     e.preventDefault();
 
-    setTodoList(
-      todosList.map((e) => {
-        if (currentTodo) {
-          if (e.key === item.key) {
-            return { ...e, key: currentTodo.key };
-          }
-          if (e.key === currentTodo.key) {
-            return { ...e, key: item.key };
-          }
+    const newTodos = todosList.map((elem: ITodoItem) => {
+      if (currentTodo) {
+        if (elem.id === item.id) {
+          return currentTodo;
         }
-        return e;
-      })
-    );
+        if (elem.id === currentTodo.id) {
+          return item;
+        }
+      }
+      return elem;
+    });
+    setTodosList(newTodos);
   };
 
-  const sortCards = (a: any, b: any): any => {
-    if (a.key > b.key) {
-      return 1;
-    } else {
-      return -1;
-    }
+  const dropHandlerTask = (
+    e: DragEvent<HTMLDivElement>,
+    item: ITodoItemWithBtn
+  ) => {
+    e.preventDefault();
+
+    const newTodos = todosList.map((element: ITodoItem) => {
+      if (activeItem) {
+        const newTasks = element.tasks?.map((elem: ITask) => {
+          if (currentTask) {
+            if (elem.id === item.id) {
+              return currentTask;
+            }
+            if (elem.id === currentTask.id) {
+              return item;
+            }
+          }
+          return elem;
+        });
+
+        return { ...element, tasks: newTasks };
+      }
+      return element;
+    });
+    setTodosList(newTodos);
   };
 
   const addNewTodo = (name: string) => {
@@ -92,35 +126,56 @@ export const TodoList = () => {
     }
   };
 
-  const addNewTask = (name: string, id: any) => {
-    if (name !== "") {
-      dispatch(addTask(name, id));
+  const addNewTask = (name: string) => {
+    if (name !== "" && activeItem) {
+      dispatch(addTask(name, activeItem.id));
     } else {
       alert("Введите что-нибудь");
     }
   };
 
-  const addNewTaskKey = (name: string, id: any) => {
-    if (name !== "") {
-      dispatch(addTask(name, id));
+  const addNewTaskKey = (name: string) => {
+    if (name !== "" && activeItem) {
+      dispatch(addTask(name, activeItem.id));
     } else {
       alert("Введите что-нибудь");
     }
   };
 
-  const onClickComplete = (id: string) => {
+  const onClickCompleteTodo = (id: number) => {
     dispatch(checkTodo(id));
   };
 
-  const onClickDelete = (id: string) => {
+  const onClickDeleteTodo = (id: number) => {
     if (window.confirm("Delete ToDo?")) {
       dispatch(deleteTodo(id));
     }
   };
 
-  const onClickItem = (item: any) => {
+  const onClickCompleteTask = (id: number) => {
+    if (activeItem) {
+      dispatch(checkTask(id, activeItem.todoId));
+    }
+  };
+
+  const onClickDeleteTask = (id: number) => {
+    if (activeItem) {
+      dispatch(deleteTask(id, activeItem.todoId));
+    }
+  };
+
+  const onClickItem = (item: ITodoItemWithBtn) => {
     setActiveItem(item);
-    console.log(activeItem);
+  };
+
+  const onEditNameTitle = (id: number, name: string) => {
+    const newTodosTitle = todosList.map((item: ITodoItem) => {
+      if (item.id === id) {
+        item.name = name;
+      }
+      return item;
+    });
+    setTodosList(newTodosTitle);
   };
 
   return (
@@ -129,7 +184,12 @@ export const TodoList = () => {
         className={styles.todoWrraper}
         style={{ background: theme.backgroundTodoList }}
       >
-        <div className={styles.todoAll}>
+        <div
+          className={styles.todoAll}
+          onClick={() => {
+            setShowAll(!showAll);
+          }}
+        >
           <TodoMenu
             src={
               isDark
@@ -140,71 +200,100 @@ export const TodoList = () => {
           />
         </div>
 
-        {todosList?.map((item: any) => {
-          return (
-            <div onClick={() => onClickItem(item)}>
+        <div
+          onClick={() => {
+            setShowAll(false);
+          }}
+        >
+          {todosList.map((item: any) => {
+            return (
               <TodoItem
-                key={item.time}
+                key={item.id}
                 id={item.id}
-                name={item.name}
+                todoId={item.todoId}
+                time={item.time}
+                name={`${item.name} ${
+                  item.tasks.length > 0 ? ` (${item.tasks.length})` : ""
+                }`}
                 completed={item.completed}
-                onComplete={() => onClickComplete(item.id)}
-                onDelete={() => onClickDelete(item.id)}
+                onComplete={() => onClickCompleteTodo(item.id)}
+                onDelete={() => onClickDeleteTodo(item.id)}
                 onDragStart={(e) => dragStartcHandler(e, item)}
                 onDragLeave={(e) => dragEndHandler(e)}
                 onDragEnd={(e) => dragEndHandler(e)}
                 onDragOver={(e) => dragOverHandler(e)}
-                onDrop={(e) => dropHandler(e, item)}
+                onDrop={(e) => dropHandlerTodo(e, item)}
+                onClick={() => onClickItem(item)}
               />
-            </div>
-          );
-        })}
-
-        <TodoMenu
-          src={
-            isDark
-              ? "../../assets/images/tickWhite.svg"
-              : "../../assets/images/tickDark.svg"
-          }
-          text="Completely"
-        />
-        <TodoMenu
-          src={
-            isDark
-              ? "../../assets/images/basketWhite.svg"
-              : "../../assets/images/basketDark.svg"
-          }
-          text="Basket"
-        />
+            );
+          })}
+        </div>
 
         <TodoAdd addNewTodo={addNewTodo} addNewTodoKey={addNewTodoKey} />
       </div>
 
       <div className={styles.todoTasks}>
-        {todosList && activeItem && <Title text={activeItem} />}
-        {/* {todos.map((item: any) => {
-          return (
-            <div>
-              <TaskItem
-                key={item.time}
-                id={item.id}
-                name={item.name}
-                completed={item.completed}
-                onComplete={() => onClickComplete(item.id)}
-                onDelete={() => onClickDelete(item.id)}
-                onDragStart={(e) => dragStartcHandler(e, item)}
-                onDragLeave={(e) => dragEndHandler(e)}
-                onDragEnd={(e) => dragEndHandler(e)}
-                onDragOver={(e) => dragOverHandler(e)}
-                onDrop={(e) => dropHandler(e, item)}
-                
-            
-                
-              />
-            </div>
-          );
-        })} */}
-        {/* <TodoAdd addNewTodo={addNewTask} addNewTodoKey={addNewTaskKey} /> */}
+        {showAll ? (
+          todosList.map((elem: ITodoItem) => {
+            return (
+              <div className={styles.todoAll}>
+                <Title text={elem} onEditTitle={onEditNameTitle} />
+                {elem?.tasks?.map((item: any) => {
+                  return (
+                    <TodoItem
+                      key={item.id}
+                      id={item.id}
+                      todoId={item.todoId}
+                      time={item.time}
+                      name={item.name}
+                      completed={item.completed}
+                      onComplete={() => onClickCompleteTask(item.id)}
+                      onDelete={() => onClickDeleteTask(item.id)}
+                      onDragStart={(e) => dragStartcHandler(e, item)}
+                      onDragLeave={(e) => dragEndHandler(e)}
+                      onDragEnd={(e) => dragEndHandler(e)}
+                      onDragOver={(e) => dragOverHandler(e)}
+                      onDrop={(e) => dropHandlerTask(e, item)}
+                    />
+                  );
+                })}
+              </div>
+            );
+          })
+        ) : (
+          <>
+            {todosList && activeItemFromState && (
+              <Title text={activeItemFromState} onEditTitle={onEditNameTitle} />
+            )}
+            {activeItemFromState?.tasks?.map((item: any) => {
+              return (
+                <TodoItem
+                  key={item.id}
+                  id={item.id}
+                  todoId={item.todoId}
+                  time={item.time}
+                  name={item.name}
+                  completed={item.completed}
+                  onComplete={() => onClickCompleteTask(item.id)}
+                  onDelete={() => onClickDeleteTask(item.id)}
+                  onDragStart={(e) => dragStartcHandlerTasks(e, item)}
+                  onDragLeave={(e) => dragEndHandler(e)}
+                  onDragEnd={(e) => dragEndHandler(e)}
+                  onDragOver={(e) => dragOverHandler(e)}
+                  onDrop={(e) => dropHandlerTask(e, item)}
+                />
+              );
+            })}
+
+            {activeItem && activeItemFromState?.tasks?.length === 0 && (
+              <h1 className={styles.textEmpty}>No tasks</h1>
+            )}
+
+            {activeItemFromState ? (
+              <TodoAdd addNewTodo={addNewTask} addNewTodoKey={addNewTaskKey} />
+            ) : null}
+          </>
+        )}
       </div>
     </div>
   );

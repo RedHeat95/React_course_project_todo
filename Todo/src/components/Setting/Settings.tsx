@@ -1,19 +1,30 @@
-import { useContext, useState, DragEvent } from "react";
+import { useContext, useState, DragEvent, useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 import { ThemeContext } from "../../context/ThemeContext";
+import { addAvatar } from "../../redux/actions/authActions";
 
 import styles from "./Settings.module.css";
 import { Container } from "../Container/Container";
+import { Button } from "../Buttons/Button/Button";
 import { Modal } from "../Modal/Modal";
 
-import { Button } from "../Buttons/Button/Button";
+const imgFromLocalStorage = JSON.parse(localStorage.getItem("img") || "[]");
 
 export const Setting = () => {
   const { isDark, theme } = useContext(ThemeContext);
 
-  const [drag, setDrag] = useState(false);
+  const dispatch = useDispatch();
 
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [drag, setDrag] = useState(false);
+
+  const [image, setImage] = useState<Blob | null>(null);
+  const [imageFile, setImageFile] = useState(imgFromLocalStorage);
+
+  useEffect(() => {
+    localStorage.setItem("img", JSON.stringify(imageFile));
+  }, [imageFile]);
 
   const dragStartHandler = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -25,12 +36,27 @@ export const Setting = () => {
     setDrag(false);
   };
 
-  const onDropHandler = (e: any) => {
+  const onDropHandler = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    let files = [...e.dataTransfer.files];
-    const formData = new FormData();
-    formData.append("file", files[0]);
+    setImage(e.dataTransfer.files[0]);
+    const reader = new FileReader();
+    reader.readAsDataURL(e.dataTransfer.files[0]);
+
+    reader.onload = (e: any) => {
+      setImageFile(e.target.result);
+    };
+
     setDrag(false);
+    setIsModalVisible(false);
+  };
+
+  const removeImage = () => {
+    setImage(null);
+  };
+
+  const addNewAvatar = () => {
+    dispatch(addAvatar(imageFile));
+    setImage(null);
   };
 
   return (
@@ -55,7 +81,7 @@ export const Setting = () => {
                 Avatar
               </p>
               <img
-                className={styles.changeImg}
+                className={styles.settingImg}
                 src={
                   isDark
                     ? "./assets/images/settingsWhite.png"
@@ -65,7 +91,18 @@ export const Setting = () => {
                 onClick={() => setIsModalVisible(true)}
               />
             </div>
-            <Button text="Save" onClick={() => {}} />
+            {image ? (
+              <>
+                <img
+                  className={styles.prevImg}
+                  src={imageFile}
+                  alt="new avatar"
+                />
+                <Button text="Remove image" onClick={removeImage} />
+              </>
+            ) : null}
+
+            <Button text="Save" onClick={addNewAvatar} />
           </div>
         </Container>
       </div>

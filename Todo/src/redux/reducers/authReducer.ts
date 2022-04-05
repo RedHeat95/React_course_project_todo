@@ -5,6 +5,7 @@ export interface IAuthState {
   id: number;
   username: string;
   email: string;
+  avatar: string;
   error: any;
 }
 
@@ -13,6 +14,7 @@ const defaultState: IAuthState = {
   id: 0,
   username: "",
   email: "",
+  avatar: "",
   error: null,
 };
 
@@ -27,6 +29,7 @@ export const authReducer = (state = defaultState, action: any) => {
       id: action.id,
       username: action.username,
       email: action.email,
+      avatar: "",
       error: null,
     };
   }
@@ -38,7 +41,22 @@ export const authReducer = (state = defaultState, action: any) => {
       id: action.id,
       username: action.username,
       email: action.email,
+      avatar: "",
       error: null,
+    };
+  }
+
+  if (action.type === ACTIONS.ADD_AVATAR) {
+    return {
+      ...state,
+      avatar: action.avatar,
+    };
+  }
+
+  if (action.type === ACTIONS.LOGOUT) {
+    return {
+      ...state,
+      isLoggedIn: false,
     };
   }
 

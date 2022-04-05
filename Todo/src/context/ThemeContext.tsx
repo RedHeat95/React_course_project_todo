@@ -5,9 +5,11 @@ const darkTheme = {
   backgroundColor: "#808080",
   backgroundTodoList: "#303030",
   backgroundTodo: "#303030",
+  backgroundAddTodo: "#979797",
   burgerButton: "#ffffff",
   username: "#ffffff",
   textName: "#ffffff",
+  title: "#ffffff",
 };
 
 const lightTheme = {
@@ -15,9 +17,11 @@ const lightTheme = {
   backgroundColor: "#ffffff",
   backgroundTodoList: "#F4F6F8",
   backgroundTodo: "#F4F6F8",
+  backgroundAddTodo: "#ffffff",
   burgerButton: "#000000",
   username: "#000000",
   textName: "#000000",
+  title: "#4dd599",
 };
 
 export const ThemeContext = createContext({

@@ -1,5 +1,4 @@
-import { useEffect, useState, useContext } from "react";
-import { useLocation } from "react-router-dom";
+import { useState, useContext } from "react";
 
 import { ThemeContext } from "../../context/ThemeContext";
 
@@ -8,56 +7,47 @@ import { Container } from "../Container/Container";
 import { TodoList } from "../Todo/TodoList/TodoList";
 
 export const Form = () => {
-  const location = useLocation();
   const { theme } = useContext(ThemeContext);
 
-  const [isPlan, setIsPlan] = useState(location.pathname.includes("/"));
-
-  useEffect(() => {
-    setIsPlan(location.pathname.includes("/"));
-  }, [location.pathname]);
-
-  const switchForm = (value: boolean) => {
-    setIsPlan(value);
-  };
+  const [isPlan, setIsPlan] = useState<boolean>(true);
 
   return (
     <div className={styles.form} style={{ background: theme.backgroundColor }}>
       <Container>
-        <div className={styles.formWrraper}>
+        <div className={styles.formWrapper}>
           <div className={styles.formTitle}>
             <p
               className={styles.title}
               style={{ color: theme.textName }}
-              onClick={() => switchForm(true)}
+              onClick={() => setIsPlan(true)}
             >
               Plan
             </p>
             <p
               className={styles.title}
               style={{ color: theme.textName }}
-              onClick={() => switchForm(false)}
+              onClick={() => setIsPlan(false)}
             >
               Day
             </p>
             <p
               className={styles.title}
               style={{ color: theme.textName }}
-              onClick={() => switchForm(false)}
+              onClick={() => setIsPlan(false)}
             >
               Week
             </p>
             <p
               className={styles.title}
               style={{ color: theme.textName }}
-              onClick={() => switchForm(false)}
+              onClick={() => setIsPlan(false)}
             >
               Month
             </p>
             <p
               className={styles.title}
               style={{ color: theme.textName }}
-              onClick={() => switchForm(false)}
+              onClick={() => setIsPlan(false)}
             >
               Year
             </p>

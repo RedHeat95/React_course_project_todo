@@ -23,7 +23,6 @@
   right: 0;
   bottom: 0;
   background-color: #fdfdff;
-  border: 0.5px solid #000000;
   border-radius: 50px;
   -webkit-transition: 0.4s;
   transition: 0.4s;
@@ -32,9 +31,7 @@
 
 .slider:before {
   content: "";
-  /* по образцу не работает */
-  /* background-image: url("/public/assets/images/moon.svg"); */
-  background-image: url("http://localhost:3000/assets/images/moon.svg");
+  background-image: url("../../assets/images/moon.svg");
   background-repeat: no-repeat;
   background-position: center;
   position: absolute;
@@ -42,8 +39,8 @@
   height: 20px;
   width: 20px;
   left: 8px;
-  bottom: 4px;
-  background-color: #000000;
+  bottom: 5px;
+  background-color: #4dd599;
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
@@ -53,9 +50,7 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-  /* по образцу не работает */
-  /* background-image: url("./public/assets/images/moonDark.svg"); */
-  background-image: url("http://localhost:3000/assets/images/moonDark.svg");
+  background-image: url("../../assets/images/moonDark.svg");
   background-color: #ffffff;
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);

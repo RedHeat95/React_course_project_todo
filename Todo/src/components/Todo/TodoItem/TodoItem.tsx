@@ -14,6 +14,7 @@ export interface ITodoItemWithBtn extends ITodoItem {
   onDragEnd: (e: DragEvent<HTMLDivElement>) => void;
   onDragOver: (e: DragEvent<HTMLDivElement>) => void;
   onDrop: (e: DragEvent<HTMLDivElement>) => void;
+  onClick?: () => void;
 }
 
 export const TodoItem = ({
@@ -26,26 +27,22 @@ export const TodoItem = ({
   onDragEnd,
   onDragOver,
   onDrop,
+  onClick,
 }: ITodoItemWithBtn) => {
   const { theme } = useContext(ThemeContext);
 
   return (
     <div
       className={styles.todoItem}
-      style={{ background: theme.backgroundTodo }}
       onDragStart={onDragStart}
       onDragLeave={onDragLeave}
       onDragEnd={onDragEnd}
       onDragOver={onDragOver}
       onDrop={onDrop}
       draggable={true}
+      onClick={onClick}
     >
-      <div className={styles.checkbox} onClick={onComplete}>
-        <input type="checkbox" id="check" className={styles.input} />
-        <label htmlFor="check" className={styles.label}>
-          <img src="./assets/images/check.svg" alt="check" />
-        </label>
-      </div>
+      <CheckInput value={completed} onChange={onComplete} />
 
       <span
         className={styles.todoItemText}
@@ -60,7 +57,7 @@ export const TodoItem = ({
       <img
         className={styles.todoItemImgRemove}
         src="../../assets/images/remove.svg"
-        alt="basket"
+        alt="remove"
         onClick={onDelete}
       />
     </div>
